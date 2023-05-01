@@ -13,6 +13,10 @@ target/
 .springBeans
 .sts4-cache
 
+## other setting
+*application-local.yml
+*application-dev.yml
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -31,7 +35,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-
-## environtmnet file
-.env

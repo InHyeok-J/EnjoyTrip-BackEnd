@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.enjoytrip.user.dao.UserMapper">
+
+  <insert id="insert" parameterType="com.enjoytrip.user.entity.User" >
+    insert into user(id, email, role, provider, nickname,created_at,updated_at, deleted_at,password)
+    values (null, #{email}, #{role}, #{provider}, #{nickname}, now(),null,null, #{password})
+  </insert>
+
+  <select id="selectAll" resultType="com.enjoytrip.user.entity.User">
+    select * from user
+  </select>
+</mapper>
