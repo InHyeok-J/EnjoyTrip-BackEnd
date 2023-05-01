@@ -13,4 +13,7 @@
   <select id="selectAll" resultType="com.enjoytrip.user.entity.User">
     select * from user
   </select>
+  <select id="selectByEmail" resultType="com.enjoytrip.user.entity.User" parameterType="string">
+    select * from user where email = #{email}
+  </select>
 </mapper>

@@ -9,4 +9,6 @@ public interface UserMapper {
 
     int insert(User user);
     List<User> selectAll();
+
+    User selectByEmail(String email);
 }
