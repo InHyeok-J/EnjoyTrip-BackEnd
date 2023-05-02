@@ -1,0 +1,11 @@
+package com.enjoytrip.attraction.service;
+
+import com.enjoytrip.attraction.dto.AttractionSearch;
+import com.enjoytrip.attraction.entity.Attraction;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+@Service
+public interface AttractionService {
+    List<Attraction> search(AttractionSearch searchOptions);
+}
