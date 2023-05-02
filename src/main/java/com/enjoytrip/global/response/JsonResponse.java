@@ -17,9 +17,9 @@ public class JsonResponse {
             .body(response);
     }
 
-    public static ResponseEntity<?> fail(String message) {
-        FailResponse response = new FailResponse(false, message, 400);
-        return ResponseEntity.status(400)
+    public static ResponseEntity<?> fail(String message, int StatusCode) {
+        FailResponse response = new FailResponse(false, message, StatusCode);
+        return ResponseEntity.status(StatusCode)
             .body(response);
     }
 
