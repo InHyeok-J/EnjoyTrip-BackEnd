@@ -9,8 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class AttractionSearchOptions {
-
+public class AttractionSearchOptionsDto {
     private Integer sidoCode;
     private Integer gugunCode;
     private Integer category;

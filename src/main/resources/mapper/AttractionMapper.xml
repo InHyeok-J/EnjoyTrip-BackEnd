@@ -5,7 +5,7 @@
 
 <mapper namespace="com.enjoytrip.attraction.dao.AttractionMapper">
 
-    <select id="search" parameterType="com.enjoytrip.attraction.dto.AttractionSearchOptions" resultType="com.enjoytrip.attraction.entity.Attraction">
+    <select id="search" parameterType="com.enjoytrip.attraction.dto.AttractionSearchOptionsDto" resultType="com.enjoytrip.attraction.entity.Attraction">
         select id, category, attraction_name as attractionName,
                address, attraction_image_url as attractionImageUrl,
                latitude, longitude, sido_code as sidoCode, gugun_code as gugunCode

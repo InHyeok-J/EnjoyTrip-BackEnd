@@ -1,6 +1,7 @@
 package com.enjoytrip.attraction.service;
 
 import com.enjoytrip.attraction.dao.AttractionReviewMapper;
+import com.enjoytrip.attraction.dto.AttractionReviewCreateDto;
 import com.enjoytrip.attraction.entity.AttractionReview;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,23 +12,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AttractionReviewServiceImpl implements AttractionReviewService {
     private final AttractionReviewMapper dao;
+
     @Override
-    public List<AttractionReview> getReviewsByAttractionId() {
-        return dao.getReviewsByAttractionId();
+    public List<AttractionReview> getReviewsByAttractionId(String attractionId) {
+        System.out.println(attractionId);
+        return dao.getReviewsByAttractionId(attractionId);
     }
 
     @Override
-    public List<AttractionReview> getReviewsByUserId() {
-        return dao.getReviewsByUserId();
+    public List<AttractionReview> getReviewsByUserId(String userId) {
+        return dao.getReviewsByUserId(userId);
     }
 
     @Override
-    public int writeReview() {
-        return dao.writeReview();
+    public int writeReview(AttractionReviewCreateDto review) {
+        return dao.writeReview(review);
     }
 
     @Override
-    public int deleteReview() {
-        return dao.deleteReview();
+    public int deleteReview(String id) {
+        return dao.deleteReview(id);
     }
 }

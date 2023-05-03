@@ -1,12 +1,15 @@
 package com.enjoytrip.attraction.service;
 
+import com.enjoytrip.attraction.dto.AttractionReviewCreateDto;
 import com.enjoytrip.attraction.entity.AttractionReview;
 
 import java.util.List;
 
 public interface AttractionReviewService {
-    List<AttractionReview> getReviewsByAttractionId();
-    List<AttractionReview> getReviewsByUserId();
-    int writeReview();
-    int deleteReview();
+    List<AttractionReview> getReviewsByAttractionId(String attractionId);
+    List<AttractionReview> getReviewsByUserId(String userId);
+
+    int writeReview(AttractionReviewCreateDto review);
+
+    int deleteReview(String id);
 }
