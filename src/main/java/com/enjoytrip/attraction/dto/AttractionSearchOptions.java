@@ -1,6 +1,5 @@
 package com.enjoytrip.attraction.dto;
 
-import com.enjoytrip.attraction.entity.AttractionCategory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
