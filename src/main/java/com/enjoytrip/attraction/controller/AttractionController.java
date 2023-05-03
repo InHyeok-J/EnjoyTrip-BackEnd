@@ -44,8 +44,9 @@ public class AttractionController {
         return JsonResponse.fail("fail", 400);
     }
 
-//    @GetMapping("/{attractionId}/reviews/{reviewId}")
-//    public ResponseEntity<?> getOneReview(@PathVariable String attractionId, @PathVariable String reviewId) {
-//        AttractionReview review = reviewService.g
-//    }
+    @GetMapping("/{attractionId}/reviews/{reviewId}")
+    public ResponseEntity<?> getOneReview(@PathVariable String attractionId, @PathVariable String reviewId) {
+        AttractionReview review = reviewService.getOneReview(reviewId);
+        return JsonResponse.okWithData(HttpStatus.OK, "관광지 리뷰 아이디로 조회 성공", review);
+    }
 }

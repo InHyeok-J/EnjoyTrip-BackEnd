@@ -25,6 +25,11 @@ public class AttractionReviewServiceImpl implements AttractionReviewService {
     }
 
     @Override
+    public AttractionReview getOneReview(String reviewId) {
+        return dao.getOneReview(reviewId);
+    }
+
+    @Override
     public int writeReview(AttractionReviewCreateDto review) {
         return dao.writeReview(review);
     }

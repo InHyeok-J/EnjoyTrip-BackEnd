@@ -10,6 +10,8 @@ import java.util.List;
 public interface AttractionReviewMapper {
     List<AttractionReview> getReviewsByAttractionId(String attractionId);
     List<AttractionReview> getReviewsByUserId(String userId);
+
+    AttractionReview getOneReview(String reviewId);
     int writeReview(AttractionReviewCreateDto review);
     int deleteReview(String reviewId);
 }

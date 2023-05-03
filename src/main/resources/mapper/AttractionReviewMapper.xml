@@ -8,14 +8,22 @@
         select id, title, content, score, user_id userId, attraction_id attractionId
         from attraction_review where attraction_id=#{attractionId}
     </select>
+
     <select id="getReviewsByUserId">
         select id, title, content, score, user_id userId, attraction_id attractionId
         from attraction_review where user_id=#{userId}
     </select>
+
+    <select id="getOneReview" resultType="com.enjoytrip.attraction.entity.AttractionReview">
+        select id, title, content, score, user_id userId, attraction_id attractionId
+        from attraction_review where id=#{reviewId}
+    </select>
+
     <insert id="writeReview" parameterType="com.enjoytrip.attraction.dto.AttractionReviewCreateDto">
         insert into attraction_review(id, title, content, score, user_id, attraction_id)
         values (null, #{title},#{content},#{score},#{userId},#{attractionId})
     </insert>
+
     <delete id="deleteReview">
         delete from attraction_review where id = #{id}
     </delete>
