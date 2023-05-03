@@ -10,8 +10,15 @@
                address, attraction_image_url as attractionImageUrl,
                latitude, longitude, sido_code as sidoCode, gugun_code as gugunCode
                from attraction where category = #{category}
-                                 and sido_code = #{sidoCode}
-                                and gugun_code = #{gugunCode}
+                                 <if test="sidoCode != null">
+                                     and sido_code = #{sidoCode}
+                                 </if>
+                                <if test="gugunCode != null">
+                                    and gugun_code = #{gugunCode}
+                                </if>
+                                <if test="title != null and title != ''">
+                                    and attraction_name like concat('%', #{title}, '%')
+                                </if>
         LIMIT #{limit} OFFSET #{offset}
     </select>
 </mapper>

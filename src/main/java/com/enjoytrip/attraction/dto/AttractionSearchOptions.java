@@ -11,9 +11,10 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class AttractionSearchOptions {
-    private int sidoCode;
-    private int gugunCode;
-    private int category;
+
+    private Integer sidoCode;
+    private Integer gugunCode;
+    private Integer category;
     private String title;
     private int limit = 10;
     private int offset;
