@@ -16,9 +16,6 @@ public class AttractionServiceImpl implements AttractionService {
     private final AttractionMapper dao;
     @Override
     public List<Attraction> search(AttractionSearchOptions searchOptions) {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("")
-        System.out.println("dao " + searchOptions);
         return dao.search(searchOptions);
     }
 }
