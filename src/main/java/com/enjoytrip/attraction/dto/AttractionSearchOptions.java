@@ -15,4 +15,6 @@ public class AttractionSearchOptions {
     private int gugunCode;
     private int category;
     private String title;
+    private int limit = 10;
+    private int offset;
 }

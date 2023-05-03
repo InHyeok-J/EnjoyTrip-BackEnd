@@ -12,5 +12,6 @@
                from attraction where category = #{category}
                                  and sido_code = #{sidoCode}
                                 and gugun_code = #{gugunCode}
+        LIMIT #{limit} OFFSET #{offset}
     </select>
 </mapper>
