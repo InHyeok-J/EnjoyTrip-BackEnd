@@ -5,7 +5,6 @@ import com.enjoytrip.attraction.entity.Attraction;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
 public interface AttractionService {
     List<Attraction> search(AttractionSearchOptions searchOptions);
 }

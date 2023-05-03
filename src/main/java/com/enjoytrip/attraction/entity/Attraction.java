@@ -10,8 +10,9 @@ import lombok.*;
 @ToString
 public class Attraction {
     private Long id;
-    private AttractionCategory category;
+    private int category;
     private String attractionName;
+    private String address;
     private String attractionImageUrl;
     private Double latitude;
     private Double longitude;

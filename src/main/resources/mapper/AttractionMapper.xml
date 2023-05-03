@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.enjoytrip.attraction.dao.AttractionMapper">
+
+    <select id="search" parameterType="com.enjoytrip.attraction.dto.AttractionSearchOptions" resultType="com.enjoytrip.attraction.entity.Attraction">
+        select id, category, attraction_name as attractionName,
+               address, attraction_image_url as attractionImageUrl,
+               latitude, longitude, sido_code as sidoCode, gugun_code as gugunCode
+               from attraction where category = #{category}
+                                 and sido_code = #{sidoCode}
+                                and gugun_code = #{gugunCode}
+    </select>
+</mapper>

@@ -1,5 +1,7 @@
 package com.enjoytrip.attraction.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.Arrays;
 
 public enum AttractionCategory {
@@ -17,5 +19,15 @@ public enum AttractionCategory {
 
     public static AttractionCategory valueOfCode(int code) {
         return Arrays.stream(AttractionCategory.values()).filter((category) -> category.getCODE() == code).findFirst().orElseThrow(IllegalArgumentException::new);
+    }
+
+    @JsonCreator
+    public static AttractionCategory getJson(String code) {
+        for (AttractionCategory category : AttractionCategory.values()) {
+            if (category.getCODE() == Integer.parseInt(code)) {
+                return category;
+            }
+        }
+        return null;
     }
 }
