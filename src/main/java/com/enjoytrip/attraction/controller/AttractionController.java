@@ -9,16 +9,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RequestMapping("/attractions")
 @RestController
 @RequiredArgsConstructor
 public class AttractionController {
 
     private final AttractionService service;
-    @GetMapping("/attractions")
+
+    @GetMapping("")
     public ResponseEntity<?> search(AttractionSearchOptions options) {
         List<Attraction> list = service.search(options);
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 검색 성공!", list);
