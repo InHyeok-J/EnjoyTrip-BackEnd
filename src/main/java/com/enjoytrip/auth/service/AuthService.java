@@ -29,7 +29,7 @@ public class AuthService {
 
         String authCode = generateAuthCode();
 
-        AuthHistory prevAuth = AuthHistory.createPrevAuth(email, authCode);
+        AuthHistory prevAuth = AuthHistory.unAuthHistory(email, authCode);
         prevAuth.setAuthCode(authCode);
         authHistoryMapper.insert(prevAuth);
         authEmailService.sendEmail(authCode,email);

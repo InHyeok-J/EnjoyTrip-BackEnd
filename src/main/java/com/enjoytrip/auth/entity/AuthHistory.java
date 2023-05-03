@@ -23,7 +23,7 @@ public class AuthHistory {
     private boolean isAuth;
     private LocalDateTime sendDate;
 
-    public static AuthHistory createPrevAuth(String email, String code){
+    public static AuthHistory unAuthHistory(String email, String code){
         return AuthHistory.builder()
             .authCode(code)
             .email(email)
