@@ -16,7 +16,8 @@ public interface CourseMapper {
     // 2. 코스 만들기
     // 2-1) 여행 코스 추가 insert
     // 2-2) 여행지 수장(관광지, 코멘트, 순서) 변경 update
-    void makeCourse(CourseAttraction attraction);
+    void makeCourse(Course course);
+    Long nextTurn(Course course);
     void insertCourse(CourseAttraction attraction);
     void courseChange(CourseAttraction attraction);
     void updateAtChange(Course course);

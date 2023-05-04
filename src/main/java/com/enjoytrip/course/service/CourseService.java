@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public interface CourseService {
     ArrayList<Course> selectAllMyCourse(Long userid);
-    void makeCourse(CourseAttraction attraction);
+    void makeCourse(Course course);
+    Long nextTurn(Course course);
     void insertCourse(CourseAttraction attraction);
     void courseChange(CourseAttraction attraction);
     void updateAtChange(Course course);

@@ -13,6 +13,10 @@
         insert into course(user_id, title, is_public, created_at, update_at) values(#{userid}, #{title}, #{ispublic}, now(), now())
     </insert>
 
+    <select id="nextTurn" parameterType="com.enjoytrip.course.entity.Course" resultType="int">
+        select max(tuen) from course_attraction where course_id = #{courseid}
+    </select>
+
     <insert id="insertCourse" parameterType="com.enjoytrip.course.entity.CourseAttraction" >
         insert into course_attraction(course_id, attraction_id, comment, turn) values(#{course_id}, #{attraction}, #{attractionid}, #{comment}, #{turn})
     </insert>

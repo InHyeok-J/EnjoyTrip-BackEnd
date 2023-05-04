@@ -21,8 +21,13 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void makeCourse(CourseAttraction attraction) {
-        courseMapper.makeCourse(attraction);
+    public void makeCourse(Course course) {
+        courseMapper.makeCourse(course);
+    }
+
+    @Override
+    public Long nextTurn(Course course) {
+        return courseMapper.nextTurn(course);
     }
 
     @Override
