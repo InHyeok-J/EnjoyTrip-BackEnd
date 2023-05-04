@@ -15,7 +15,6 @@ public class AttractionReviewServiceImpl implements AttractionReviewService {
 
     @Override
     public List<AttractionReview> getReviewsByAttractionId(String attractionId) {
-        System.out.println(attractionId);
         return dao.getReviewsByAttractionId(attractionId);
     }
 
@@ -30,7 +29,7 @@ public class AttractionReviewServiceImpl implements AttractionReviewService {
     }
 
     @Override
-    public int writeReview(AttractionReviewCreateDto review) {
+    public int writeReview(AttractionReview review) {
         return dao.writeReview(review);
     }
 

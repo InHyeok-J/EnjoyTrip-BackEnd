@@ -10,7 +10,7 @@ public interface AttractionReviewService {
     List<AttractionReview> getReviewsByUserId(String userId);
     AttractionReview getOneReview(String reviewId);
 
-    int writeReview(AttractionReviewCreateDto review);
+    int writeReview(AttractionReview review);
 
     int deleteReview(String id);
 }

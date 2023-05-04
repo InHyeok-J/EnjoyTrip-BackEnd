@@ -19,7 +19,7 @@
         from attraction_review where id=#{reviewId}
     </select>
 
-    <insert id="writeReview" parameterType="com.enjoytrip.attraction.dto.AttractionReviewCreateDto">
+    <insert id="writeReview" parameterType="com.enjoytrip.attraction.dto.AttractionReview">
         insert into attraction_review(id, title, content, score, user_id, attraction_id)
         values (null, #{title},#{content},#{score},#{userId},#{attractionId})
     </insert>
