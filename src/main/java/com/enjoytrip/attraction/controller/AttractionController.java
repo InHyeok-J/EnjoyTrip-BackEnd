@@ -42,9 +42,9 @@ public class AttractionController {
         AttractionReview review = reviewCreateDto.toEntity(sessionUser.getId());
         int res = reviewService.writeReview(review);
         if (res == 1) {
-            return JsonResponse.okWithData(HttpStatus.OK, "관광지 리뷰 작성 성공", res);
+            return JsonResponse.ok(HttpStatus.OK, "관광지 리뷰 작성 성공");
         }
-        return JsonResponse.fail("fail", 400);
+        return JsonResponse.fail("fail", HttpStatus.BAD_REQUEST.value());
     }
 
     @GetMapping("/{attractionId}/reviews/{reviewId}")
@@ -52,7 +52,7 @@ public class AttractionController {
     public ResponseEntity<?> getOneReview(@PathVariable String reviewId) {
         AttractionReview review = reviewService.getOneReview(reviewId);
         if (review == null) {
-            return JsonResponse.fail("리뷰가 없습니다", 404);
+            return JsonResponse.fail("리뷰가 없습니다", HttpStatus.NOT_FOUND.value());
         }
         return JsonResponse.okWithData(HttpStatus.OK, "관광지 리뷰 아이디로 조회 성공", review);
     }
@@ -63,6 +63,6 @@ public class AttractionController {
         if (res == 1) {
             return JsonResponse.okWithData(HttpStatus.OK, "관광지 리뷰 삭제 성공", res);
         }
-        return JsonResponse.fail("fail", 400);
+        return JsonResponse.fail("fail", HttpStatus.NOT_FOUND.value());
     }
 }
