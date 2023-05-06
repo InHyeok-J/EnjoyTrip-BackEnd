@@ -1,5 +1,6 @@
 package com.enjoytrip.course.service;
 
+import com.enjoytrip.course.controller.dto.CourseManageRequest;
 import com.enjoytrip.course.dao.CourseMapper;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
@@ -8,16 +9,17 @@ import com.enjoytrip.course.entity.CourseLike;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService{
 
     private final CourseMapper courseMapper;
+
     @Override
-    public ArrayList<Course> selectAllMyCourse(Long userid) {
-        return courseMapper.selectAllMyCourse(userid);
+    public List<Course> CourseByUser(Long userId) {
+        return courseMapper.CourseByUser(userId);
     }
 
     @Override
@@ -26,23 +28,23 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Long nextTurn(Course course) {
-        return courseMapper.nextTurn(course);
+    public Long nextTurn(Long userId) {
+        return courseMapper.nextTurn(userId);
     }
 
     @Override
-    public void insertCourse(CourseAttraction attraction) {
-        courseMapper.insertCourse(attraction);
+    public void insertCourse(CourseManageRequest maxTurnRequest) {
+        courseMapper.insertCourse(maxTurnRequest);
     }
 
     @Override
-    public void courseChange(CourseAttraction attraction) {
-        courseMapper.courseChange(attraction);
+    public void courseChange(CourseManageRequest manageRequest) {
+        courseMapper.courseChange(manageRequest);
     }
 
     @Override
-    public void updateAtChange(Course course) {
-        courseMapper.updateAtChange(course);
+    public void updateAtChange(Long courseId) {
+        courseMapper.updateAtChange(courseId);
     }
 
     @Override

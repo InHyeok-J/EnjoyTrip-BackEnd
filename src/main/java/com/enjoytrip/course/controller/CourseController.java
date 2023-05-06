@@ -1,7 +1,7 @@
 package com.enjoytrip.course.controller;
 
+import com.enjoytrip.course.controller.dto.CourseManageRequest;
 import com.enjoytrip.course.entity.Course;
-import com.enjoytrip.course.entity.CourseAttraction;
 import com.enjoytrip.course.entity.CourseComment;
 import com.enjoytrip.course.entity.CourseLike;
 import com.enjoytrip.course.service.CourseService;
@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.xml.stream.events.Comment;
-import javax.xml.ws.Response;
 import java.util.List;
 
 @RequestMapping("/course")
@@ -22,9 +20,9 @@ import java.util.List;
 public class CourseController {
     private final CourseService courseService;
 
-    @PostMapping("")
-    public ResponseEntity<?> selectAll(@RequestBody Long id){
-        List<Course> list = courseService.selectAllMyCourse(id);
+    @GetMapping("/list")
+    public ResponseEntity<?> selectAll(@RequestParam Long userId){
+        List<Course> list = courseService.CourseByUser(userId);
         return JsonResponse.okWithData(HttpStatus.OK, "MyCourse 검색 성공", list);
     }
 
@@ -34,24 +32,26 @@ public class CourseController {
         return JsonResponse.ok(HttpStatus.OK, "MakeCourse 성공");
     }
     @PostMapping("/insert")
-    public ResponseEntity<?> insertCourse(@RequestBody CourseAttraction courseAttraction, @RequestBody Course course){
-        courseAttraction.setCourseid(courseService.nextTurn(course));
-        courseService.insertCourse(courseAttraction);
-        return JsonResponse.ok(HttpStatus.OK, "Insert Course 성공");
+    public ResponseEntity<?> insertCourse(@RequestBody CourseManageRequest manageRequest){
+        Long nextTurn = courseService.nextTurn(manageRequest.getCourseId()) + 1;
+        manageRequest.setTurn(nextTurn);
+        System.out.println(manageRequest.toString());
+        courseService.insertCourse(manageRequest);
+        return JsonResponse.okWithData(HttpStatus.OK, "Insert Course 성공",manageRequest);
     }
 
     @PutMapping("/change")
-    public ResponseEntity<?> courseChange(@RequestBody CourseAttraction courseAttraction, @RequestBody Course course){
-        courseService.courseChange(courseAttraction);
-        courseService.updateAtChange(course);
-        return JsonResponse.ok(HttpStatus.OK, "Course Change 성공");
+    public ResponseEntity<?> courseChange(@RequestBody CourseManageRequest manageRequest){
+        System.out.println(manageRequest.toString());
+        courseService.courseChange(manageRequest);
+        courseService.updateAtChange(manageRequest.getCourseId());
+        return JsonResponse.okWithData(HttpStatus.OK, "Course Change 성공",manageRequest);
     }
 
     @PostMapping("/public")
-    public ResponseEntity<?> publicChange(boolean pub, HttpSession session){
-        Course course = (Course) session.getAttribute("course");
-        course.setPublic(pub);
-        courseService.publicChange(course);
+    public ResponseEntity<?> publicChange(Boolean pub){
+
+        //courseService.publicChange();
         return JsonResponse.ok(HttpStatus.OK, "Public Change 성공");
     }
 

@@ -1,19 +1,20 @@
 package com.enjoytrip.course.service;
 
+import com.enjoytrip.course.controller.dto.CourseManageRequest;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
 import com.enjoytrip.course.entity.CourseComment;
 import com.enjoytrip.course.entity.CourseLike;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface CourseService {
-    ArrayList<Course> selectAllMyCourse(Long userid);
+    List<Course> CourseByUser(Long userId);
     void makeCourse(Course course);
-    Long nextTurn(Course course);
-    void insertCourse(CourseAttraction attraction);
-    void courseChange(CourseAttraction attraction);
-    void updateAtChange(Course course);
+    Long nextTurn(Long userId);
+    void insertCourse(CourseManageRequest maxTurnRequest);
+    void courseChange(CourseManageRequest manageRequest);
+    void updateAtChange(Long courseId);
     void publicChange(Course course);
     void commentAdd(CourseComment comment);
     void courseLike(CourseLike like);

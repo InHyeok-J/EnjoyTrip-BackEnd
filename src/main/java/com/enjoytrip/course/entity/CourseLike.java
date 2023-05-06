@@ -9,6 +9,6 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 public class CourseLike {
-    private Long courseid;
-    private Long userid;
+    private Long courseId;
+    private Long userId;
 }

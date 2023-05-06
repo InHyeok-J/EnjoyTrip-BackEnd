@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class CourseComment {
     private Long id;
-    private Long courseid;
-    private Long userid;
+    private Long courseId;
+    private Long userId;
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
