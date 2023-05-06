@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @ToString
@@ -16,10 +18,9 @@ public class AttractionReviewCreateDto {
     private String title;
     @NotBlank
     private String content;
-    @NotBlank
+    @NotNull
     private Integer score;
-    private Long userId;
-    @NotBlank
+    @NotNull
     private Long attractionId;
     public AttractionReview toEntity(Long userId) {
         return AttractionReview.builder()
