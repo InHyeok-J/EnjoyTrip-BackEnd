@@ -1,6 +1,5 @@
 package com.enjoytrip.attraction.dto;
 
-import com.enjoytrip.attraction.entity.AttractionCategory;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,8 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-public class AttractionSearchOptions {
-
+public class AttractionSearchOptionsDto {
     private Integer sidoCode;
     private Integer gugunCode;
     private Integer category;
