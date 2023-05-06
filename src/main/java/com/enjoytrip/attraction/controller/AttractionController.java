@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @RequestMapping("/attractions")
@@ -32,7 +33,7 @@ public class AttractionController {
     }
 
     @GetMapping("/{attractionId}/reviews")
-    public ResponseEntity<?> getReviewsByAttractionId(@PathVariable String attractionId) {
+    public ResponseEntity<?> getReviewsByAttractionId(@NotBlank @PathVariable String attractionId) {
         List<AttractionReview> list = reviewService.getReviewsByAttractionId(attractionId);
         return JsonResponse.okWithData(HttpStatus.OK, "관광지 아이디로 리뷰 검색 성공", list);
     }
@@ -49,7 +50,7 @@ public class AttractionController {
 
     @GetMapping("/{attractionId}/reviews/{reviewId}")
 
-    public ResponseEntity<?> getOneReview(@PathVariable String reviewId) {
+    public ResponseEntity<?> getOneReview(@NotBlank @PathVariable String reviewId) {
         AttractionReview review = reviewService.getOneReview(reviewId);
         if (review == null) {
             return JsonResponse.fail("리뷰가 없습니다", HttpStatus.NOT_FOUND.value());
@@ -58,7 +59,7 @@ public class AttractionController {
     }
 
     @DeleteMapping("/{attractionId}/reviews/{reviewId}")
-    public ResponseEntity<?> deleteOneReview(@PathVariable String reviewId) {
+    public ResponseEntity<?> deleteOneReview(@NotBlank @PathVariable String reviewId) {
         int res = reviewService.deleteReview(reviewId);
         if (res == 1) {
             return JsonResponse.okWithData(HttpStatus.OK, "관광지 리뷰 삭제 성공", res);
