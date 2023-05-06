@@ -1,7 +1,6 @@
 spring:
   profiles:
     active: prod
-  location: classpath:/application-prod.yml
 
   datasource:
       url: ${spring.datasource.url}
