@@ -1,0 +1,20 @@
+<settings>
+    <servers>
+        <server>
+            <id>Tripfy</id>
+            <username>synodical</username>
+            <password>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</password>
+        </server>
+    </servers>
+    <profiles>
+        <profile>
+            <id>synodical</id>
+            <distributionManagement>
+                <repository>
+                    <id>Tripfy</id>
+                    <url>https://api.github.com/repos/synodical/Tripfy/releases</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+</settings>
