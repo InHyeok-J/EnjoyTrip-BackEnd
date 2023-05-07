@@ -29,7 +29,7 @@
         update course_attraction set attraction_id = #{attractionId}, comment = #{comment}, turn=#{turn} where id = #{id}
     </update>
 
-    <update id="updateAtChange" parameterType="com.enjoytrip.course.controller.dto.CoursePublicChagne">
+    <update id="updatedAtChange" parameterType="com.enjoytrip.course.controller.dto.CoursePublicChagne">
         update course set updated_at=now() where id = #{id}
     </update>
 

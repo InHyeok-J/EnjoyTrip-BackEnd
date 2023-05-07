@@ -45,7 +45,7 @@ public class CourseController {
     public ResponseEntity<?> courseChange(@RequestBody CourseManageRequest manageRequest){
         System.out.println(manageRequest.toString());
         courseService.courseChange(manageRequest);
-        courseService.updateAtChange(manageRequest.getCourseId());
+        courseService.updatedAtChange(manageRequest.getCourseId());
         return JsonResponse.okWithData(HttpStatus.OK, "Course Change 성공",manageRequest);
     }
 

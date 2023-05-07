@@ -15,7 +15,7 @@ public interface CourseService {
     Long nextTurn(Long userId);
     void insertCourse(CourseManageRequest maxTurnRequest);
     void courseChange(CourseManageRequest manageRequest);
-    void updateAtChange(Long courseId);
+    void updatedAtChange(Long courseId);
     void publicChange(CoursePublicChagne publicChagne);
     void commentAdd(CourseComment comment);
     void courseLike(CourseLike like);

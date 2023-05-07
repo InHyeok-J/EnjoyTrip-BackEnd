@@ -44,8 +44,8 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void updateAtChange(Long courseId) {
-        courseMapper.updateAtChange(courseId);
+    public void updatedAtChange(Long courseId) {
+        courseMapper.updatedAtChange(courseId);
     }
 
     @Override

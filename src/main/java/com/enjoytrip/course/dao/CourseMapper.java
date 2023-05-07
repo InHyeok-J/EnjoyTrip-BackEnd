@@ -23,7 +23,7 @@ public interface CourseMapper {
     Long nextTurn(Long userId);
     void insertCourse(CourseManageRequest manageRequest);
     void courseChange(CourseManageRequest manageRequest);
-    void updateAtChange(Long courseId);
+    void updatedAtChange(Long courseId);
 
     // 3. 코스 공개 여부 바꾸기
     void publicChange(CoursePublicChagne publicChagne);
