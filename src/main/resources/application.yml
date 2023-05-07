@@ -3,7 +3,12 @@ spring:
     active: prod
 
   datasource:
-      url: ${spring.datasource.url}
-      username: ${spring.datasource.username}
-      password: ${spring.datasource.password}
-      driver: ${spring.datasource.driver}
+      url: ${MYSQL_URL}
+      username: ${MYSQL_USERNAME}
+      password: ${MYSQL_PASSWORD}
+      driver: ${MYSQL_DRIVER}
+
+
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
