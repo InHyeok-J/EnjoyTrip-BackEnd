@@ -1,4 +1,14 @@
 spring:
   profiles:
+<<<<<<< HEAD
     active: local
 
+=======
+    active: prod
+
+  datasource:
+      url: ${spring.datasource.url}
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+      driver: ${spring.datasource.driver}
+>>>>>>> main
