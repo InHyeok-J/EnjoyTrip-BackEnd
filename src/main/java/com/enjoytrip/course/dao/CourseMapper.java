@@ -1,6 +1,7 @@
 package com.enjoytrip.course.dao;
 
 import com.enjoytrip.course.controller.dto.CourseManageRequest;
+import com.enjoytrip.course.controller.dto.CoursePublicChagne;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
 import com.enjoytrip.course.entity.CourseComment;
@@ -25,7 +26,7 @@ public interface CourseMapper {
     void updateAtChange(Long courseId);
 
     // 3. 코스 공개 여부 바꾸기
-    void publicChange(Course course);
+    void publicChange(CoursePublicChagne publicChagne);
 
     // 4. 코스 댓글 달기 (200자 제한)
     void commentAdd(CourseComment comment);

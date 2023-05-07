@@ -1,6 +1,7 @@
 package com.enjoytrip.course.service;
 
 import com.enjoytrip.course.controller.dto.CourseManageRequest;
+import com.enjoytrip.course.controller.dto.CoursePublicChagne;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
 import com.enjoytrip.course.entity.CourseComment;
@@ -15,7 +16,7 @@ public interface CourseService {
     void insertCourse(CourseManageRequest maxTurnRequest);
     void courseChange(CourseManageRequest manageRequest);
     void updateAtChange(Long courseId);
-    void publicChange(Course course);
+    void publicChange(CoursePublicChagne publicChagne);
     void commentAdd(CourseComment comment);
     void courseLike(CourseLike like);
 }

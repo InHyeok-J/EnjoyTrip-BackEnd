@@ -21,14 +21,6 @@
         insert into course_attraction(course_id, attraction_id, comment, turn) values(#{courseId}, #{attractionId}, #{comment}, #{turn})
     </insert>
 
-    <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment" >
-        insert into course_comment(course_id, user_id, content, create_at, update_at) values(#{courseId}, #{userId}, #{content}, now(), now())
-    </insert>
-
-    <insert id="courseLike" parameterType="com.enjoytrip.course.entity.CourseLike" >
-        insert into course_comment(course_id, user_id) values(#{courseId}, #{userId})
-    </insert>
-
     <update id="publicChange" parameterType="com.enjoytrip.course.entity.Course">
         update course set is_public = #{isPublic} where id = #{id}
     </update>
@@ -37,9 +29,17 @@
         update course_attraction set attraction_id = #{attractionId}, comment = #{comment}, turn=#{turn} where id = #{id}
     </update>
 
-    <update id="updateAtChange" parameterType="long">
+    <update id="updateAtChange" parameterType="com.enjoytrip.course.controller.dto.CoursePublicChagne">
         update course set updated_at=now() where id = #{id}
     </update>
+
+    <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment" >
+        insert into course_comment(course_id, user_id, content, created_at, updated_at) values(#{courseId}, #{userId}, #{content}, now(), now())
+    </insert>
+
+    <insert id="courseLike" parameterType="com.enjoytrip.course.entity.CourseLike" >
+        insert into course_like(course_id, user_id) values(#{courseId}, #{userId})
+    </insert>
 
     <update id="coommentChange" parameterType="com.enjoytrip.course.entity.CourseComment">
         update course_comment set content=#{content}, updated_at=now() where id = #{id}

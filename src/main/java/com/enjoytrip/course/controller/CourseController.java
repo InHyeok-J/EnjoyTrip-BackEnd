@@ -1,6 +1,7 @@
 package com.enjoytrip.course.controller;
 
 import com.enjoytrip.course.controller.dto.CourseManageRequest;
+import com.enjoytrip.course.controller.dto.CoursePublicChagne;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseComment;
 import com.enjoytrip.course.entity.CourseLike;
@@ -49,10 +50,9 @@ public class CourseController {
     }
 
     @PostMapping("/public")
-    public ResponseEntity<?> publicChange(Boolean pub){
-
-        //courseService.publicChange();
-        return JsonResponse.ok(HttpStatus.OK, "Public Change 성공");
+    public ResponseEntity<?> publicChange(@RequestBody CoursePublicChagne publicChagne){
+        courseService.publicChange(publicChagne);
+        return JsonResponse.okWithData(HttpStatus.OK, "Public Change 성공",publicChagne);
     }
 
     @PostMapping("/comment")

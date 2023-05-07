@@ -1,6 +1,7 @@
 package com.enjoytrip.course.service;
 
 import com.enjoytrip.course.controller.dto.CourseManageRequest;
+import com.enjoytrip.course.controller.dto.CoursePublicChagne;
 import com.enjoytrip.course.dao.CourseMapper;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
@@ -48,8 +49,8 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void publicChange(Course course) {
-        courseMapper.publicChange(course);
+    public void publicChange(CoursePublicChagne publicChagne) {
+        courseMapper.publicChange(publicChagne);
     }
 
     @Override
