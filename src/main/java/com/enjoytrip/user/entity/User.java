@@ -26,4 +26,8 @@ public class User {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+
+    public void updatePassword(String password){
+        this.password = password;
+    }
 }

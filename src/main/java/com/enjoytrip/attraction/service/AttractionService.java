@@ -1,0 +1,9 @@
+package com.enjoytrip.attraction.service;
+
+import com.enjoytrip.attraction.dto.AttractionSearchOptionsDto;
+import com.enjoytrip.attraction.entity.Attraction;
+
+import java.util.List;
+public interface AttractionService {
+    List<Attraction> search(AttractionSearchOptionsDto searchOptions);
+}

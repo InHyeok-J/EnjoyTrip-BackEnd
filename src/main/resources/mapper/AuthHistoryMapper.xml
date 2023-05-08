@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.enjoytrip.auth.dao.AuthHistoryMapper">
+
+  <insert id="insert" parameterType="com.enjoytrip.auth.entity.AuthHistory" >
+    insert into auth_history(id, email, auth_code, is_auth,send_date) values(null, #{email}, #{authCode}, #{isAuth}, #{sendDate})
+  </insert>
+
+  <select id="selectByEmailLastAuth" resultType="com.enjoytrip.auth.entity.AuthHistory">
+    select id, email, auth_code as authCode, is_auth as isAuth, send_date as sendDate from auth_history where email = #{email} order by id desc limit 1
+  </select>
+
+  <update id="updateAuthStatus"  parameterType="com.enjoytrip.auth.entity.AuthHistory" >
+    update auth_history set is_auth = ${isAuth} where id = #{id}
+  </update>
+</mapper>
