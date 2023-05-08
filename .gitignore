@@ -16,6 +16,7 @@ target/
 ## other setting
 *application-local.yml
 *application-dev.yml
+*application-prod.yml
 
 ### IntelliJ IDEA ###
 .idea
@@ -35,3 +36,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/application-prod.yml
