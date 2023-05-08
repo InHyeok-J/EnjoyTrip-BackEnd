@@ -17,6 +17,7 @@ target/
 *application-prod.yml
 *application-local.yml
 *application-dev.yml
+*application-prod.yml
 
 /src/main/resources/application-local.yml
 /src/main/resources/application-prod.properties
@@ -40,3 +41,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/application-prod.yml
