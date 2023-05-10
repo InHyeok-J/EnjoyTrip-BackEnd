@@ -10,11 +10,11 @@ import com.enjoytrip.course.entity.CourseLike;
 import java.util.List;
 
 public interface CourseService {
-    List<Course> CourseByUser(Long userId);
+    List<Course> CourseByUserid(Long userId);
     void makeCourse(Course course);
     Long nextTurn(Long userId);
-    void insertCourse(CourseManageRequest maxTurnRequest);
-    void courseChange(CourseManageRequest manageRequest);
+    void insertAttraction(CourseManageRequest maxTurnRequest);
+    void attractionChange(CourseManageRequest manageRequest);
     void updatedAtChange(Long courseId);
     void publicChange(CoursePublicChagne publicChagne);
     void commentAdd(CourseComment comment);

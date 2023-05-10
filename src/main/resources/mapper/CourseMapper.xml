@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.enjoytrip.course.dao.CourseMapper">
-    <select id="CourseByUser" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
+    <select id="CourseByUserid" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
         select id, user_id,title, is_public, created_at, updated_at
         from course where user_id = #{userId}
     </select>
@@ -17,7 +17,7 @@
         select max(turn) from course_attraction where course_id = #{courseId}
     </select>
 
-    <insert id="insertCourse" parameterType="com.enjoytrip.course.entity.CourseAttraction" >
+    <insert id="insertAttraction" parameterType="com.enjoytrip.course.entity.CourseAttraction" >
         insert into course_attraction(course_id, attraction_id, comment, turn) values(#{courseId}, #{attractionId}, #{comment}, #{turn})
     </insert>
 
@@ -25,7 +25,7 @@
         update course set is_public = #{isPublic} where id = #{id}
     </update>
 
-    <update id="courseChange" parameterType="com.enjoytrip.course.controller.dto.CourseManageRequest">
+    <update id="attractionChange" parameterType="com.enjoytrip.course.controller.dto.CourseManageRequest">
         update course_attraction set attraction_id = #{attractionId}, comment = #{comment}, turn=#{turn} where id = #{id}
     </update>
 

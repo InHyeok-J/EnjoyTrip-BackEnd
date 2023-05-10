@@ -38,6 +38,8 @@ public class AuthController {
 
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest requestDto) {
+        System.out.println(requestDto.getEmail());
+        System.out.println(requestDto.getPassword());
         authService.login(requestDto);
         return JsonResponse.ok(HttpStatus.OK, "로그인 성공");
     }

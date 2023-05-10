@@ -22,34 +22,35 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping("/list")
-    public ResponseEntity<?> selectAll(@RequestParam Long userId){
-        List<Course> list = courseService.CourseByUser(userId);
+    public ResponseEntity<?> selectAll(@RequestParam Long userId, HttpSession session){
+        System.out.println(session.getId());
+        List<Course> list = courseService.CourseByUserid(userId);
         return JsonResponse.okWithData(HttpStatus.OK, "MyCourse 검색 성공", list);
     }
 
-    @PostMapping("/make")
+    @PostMapping("/")
     public ResponseEntity<?> makeCourse(@RequestBody Course course){
         courseService.makeCourse(course);
         return JsonResponse.ok(HttpStatus.OK, "MakeCourse 성공");
     }
-    @PostMapping("/insert")
-    public ResponseEntity<?> insertCourse(@RequestBody CourseManageRequest manageRequest){
+    @PostMapping("/attractions")
+    public ResponseEntity<?> insertAttraction(@RequestBody CourseManageRequest manageRequest){
         Long nextTurn = courseService.nextTurn(manageRequest.getCourseId()) + 1;
         manageRequest.setTurn(nextTurn);
         System.out.println(manageRequest.toString());
-        courseService.insertCourse(manageRequest);
+        courseService.insertAttraction(manageRequest);
         return JsonResponse.okWithData(HttpStatus.OK, "Insert Course 성공",manageRequest);
     }
 
-    @PutMapping("/change")
-    public ResponseEntity<?> courseChange(@RequestBody CourseManageRequest manageRequest){
+    @PatchMapping("/attractions")
+    public ResponseEntity<?> attractionChange(@RequestBody CourseManageRequest manageRequest){
         System.out.println(manageRequest.toString());
-        courseService.courseChange(manageRequest);
+        courseService.attractionChange(manageRequest);
         courseService.updatedAtChange(manageRequest.getCourseId());
         return JsonResponse.okWithData(HttpStatus.OK, "Course Change 성공",manageRequest);
     }
 
-    @PostMapping("/public")
+    @PatchMapping("/public")
     public ResponseEntity<?> publicChange(@RequestBody CoursePublicChagne publicChagne){
         courseService.publicChange(publicChagne);
         return JsonResponse.okWithData(HttpStatus.OK, "Public Change 성공",publicChagne);

@@ -19,8 +19,8 @@ public class CourseServiceImpl implements CourseService{
     private final CourseMapper courseMapper;
 
     @Override
-    public List<Course> CourseByUser(Long userId) {
-        return courseMapper.CourseByUser(userId);
+    public List<Course> CourseByUserid(Long userId) {
+        return courseMapper.CourseByUserid(userId);
     }
 
     @Override
@@ -34,13 +34,13 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void insertCourse(CourseManageRequest maxTurnRequest) {
-        courseMapper.insertCourse(maxTurnRequest);
+    public void insertAttraction(CourseManageRequest maxTurnRequest) {
+        courseMapper.insertAttraction(maxTurnRequest);
     }
 
     @Override
-    public void courseChange(CourseManageRequest manageRequest) {
-        courseMapper.courseChange(manageRequest);
+    public void attractionChange(CourseManageRequest manageRequest) {
+        courseMapper.attractionChange(manageRequest);
     }
 
     @Override
