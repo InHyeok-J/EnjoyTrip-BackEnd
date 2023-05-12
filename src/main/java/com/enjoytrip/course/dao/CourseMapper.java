@@ -1,6 +1,5 @@
 package com.enjoytrip.course.dao;
 
-import com.enjoytrip.course.controller.dto.CourseManageRequest;
 import com.enjoytrip.course.controller.dto.CoursePublicChagne;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
@@ -21,8 +20,8 @@ public interface CourseMapper {
     // 2-2) 여행지 수장(관광지, 코멘트, 순서) 변경 update
     void makeCourse(Course course);
     Long nextTurn(Long userId);
-    void insertAttraction(CourseManageRequest manageRequest);
-    void attractionChange(CourseManageRequest manageRequest);
+    void insertAttraction(CourseAttraction courseAttraction);
+    void attractionChange(CourseAttraction courseAttraction);
     void updatedAtChange(Long courseId);
 
     // 3. 코스 공개 여부 바꾸기

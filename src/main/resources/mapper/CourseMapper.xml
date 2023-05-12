@@ -4,13 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.enjoytrip.course.dao.CourseMapper">
-    <select id="CourseByUserid" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
+    <select id="CourseByUserId" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
         select id, user_id,title, is_public, created_at, updated_at
         from course where user_id = #{userId}
     </select>
 
     <insert id="makeCourse" parameterType="com.enjoytrip.course.entity.Course" >
-        insert into course(user_id, title, is_public, created_at, updated_at) values(#{userId}, #{title}, #{isPublic}, now(), now())
+        insert into course values(null, #{userId}, #{title}, #{isPublic}, now(), now())
     </insert>
 
     <select id="nextTurn" parameterType="long" resultType="long">

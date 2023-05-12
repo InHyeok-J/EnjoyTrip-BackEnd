@@ -1,6 +1,5 @@
 package com.enjoytrip.course.service;
 
-import com.enjoytrip.course.controller.dto.CourseManageRequest;
 import com.enjoytrip.course.controller.dto.CoursePublicChagne;
 import com.enjoytrip.course.dao.CourseMapper;
 import com.enjoytrip.course.entity.Course;
@@ -34,13 +33,13 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void insertAttraction(CourseManageRequest maxTurnRequest) {
-        courseMapper.insertAttraction(maxTurnRequest);
+    public void insertAttraction(CourseAttraction courseAttraction) {
+        courseMapper.insertAttraction(courseAttraction);
     }
 
     @Override
-    public void attractionChange(CourseManageRequest manageRequest) {
-        courseMapper.attractionChange(manageRequest);
+    public void attractionChange(CourseAttraction courseAttraction) {
+        courseMapper.attractionChange(courseAttraction);
     }
 
     @Override
