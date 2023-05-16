@@ -4,44 +4,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.enjoytrip.course.dao.CourseMapper">
-    <select id="CourseByUserId" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
-        select id, user_id,title, is_public, created_at, updated_at
-        from course where user_id = #{userId}
+    <select id="SelectAll" resultType="com.enjoytrip.course.entity.Course">
+        select * from course
     </select>
 
-    <insert id="makeCourse" parameterType="com.enjoytrip.course.entity.Course" >
+    <select id="CourseByUserId" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
+        select *
+        from course where user_id = #{userId}
+    </select>
+    <select id="AttractionByCourseId" parameterType="long" resultType="com.enjoytrip.course.entity.CourseAttraction">
+        select *
+        from course_attraction where course_id = #{courseId}
+    </select>
+
+    <insert id="makeCourse" parameterType="com.enjoytrip.course.entity.Course" useGeneratedKeys="true" keyProperty="id">
         insert into course values(null, #{userId}, #{title}, #{isPublic}, now(), now())
     </insert>
 
-    <select id="nextTurn" parameterType="long" resultType="long">
-        select max(turn) from course_attraction where course_id = #{courseId}
-    </select>
-
-    <insert id="insertAttraction" parameterType="com.enjoytrip.course.entity.CourseAttraction" >
-        insert into course_attraction(course_id, attraction_id, comment, turn) values(#{courseId}, #{attractionId}, #{comment}, #{turn})
+    <insert id="insertAttraction" parameterType="com.enjoytrip.course.entity.CourseAttraction">
+        insert into course_attraction values(null, #{courseId}, #{attractionId});
     </insert>
 
     <update id="publicChange" parameterType="com.enjoytrip.course.entity.Course">
         update course set is_public = #{isPublic} where id = #{id}
     </update>
 
-    <update id="attractionChange" parameterType="com.enjoytrip.course.controller.dto.CourseManageRequest">
-        update course_attraction set attraction_id = #{attractionId}, comment = #{comment}, turn=#{turn} where id = #{id}
-    </update>
-
-    <update id="updatedAtChange" parameterType="com.enjoytrip.course.controller.dto.CoursePublicChagne">
+    <update id="updatedAtChange" parameterType="com.enjoytrip.course.entity.Course">
         update course set updated_at=now() where id = #{id}
     </update>
-
-    <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment" >
-        insert into course_comment(course_id, user_id, content, created_at, updated_at) values(#{courseId}, #{userId}, #{content}, now(), now())
-    </insert>
 
     <insert id="courseLike" parameterType="com.enjoytrip.course.entity.CourseLike" >
         insert into course_like(course_id, user_id) values(#{courseId}, #{userId})
     </insert>
-
-    <update id="coommentChange" parameterType="com.enjoytrip.course.entity.CourseComment">
-        update course_comment set content=#{content}, updated_at=now() where id = #{id}
-    </update>
 </mapper>

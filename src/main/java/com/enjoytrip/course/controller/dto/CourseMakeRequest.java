@@ -1,7 +1,9 @@
 package com.enjoytrip.course.controller.dto;
 
+import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -12,16 +14,17 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 public class CourseMakeRequest {
-    private String title; // course 제목
-    private Boolean isPublid; // 게시글 공개여부
-    private List<CourseAttraction> tmp;
+    private Long userId;
+    private String title;
+    private Boolean isPublic;
+    private List<Long> attractionIds;
+
     /*
     * {
-    * title: "courseA"
-    * isPunblic : True,
-    * tmp:[{
-    * attationId : 1,
-    * comment : "밥"
+    * title : "코스1",
+    * isPublic : "true",
+    * attractionIds:[{
+    * atractionId : 125266
     * }]
     * }
     * */
