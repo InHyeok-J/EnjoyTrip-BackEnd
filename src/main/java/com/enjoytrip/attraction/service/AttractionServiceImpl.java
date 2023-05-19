@@ -1,6 +1,8 @@
 package com.enjoytrip.attraction.service;
 
 import com.enjoytrip.attraction.dao.AttractionMapper;
+import com.enjoytrip.attraction.dto.AttractionDetailResDto;
+import com.enjoytrip.attraction.dto.AttractionListResDto;
 import com.enjoytrip.attraction.dto.AttractionSearchOptionsDto;
 import com.enjoytrip.attraction.entity.Attraction;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,12 @@ import java.util.List;
 public class AttractionServiceImpl implements AttractionService {
     private final AttractionMapper dao;
     @Override
-    public List<Attraction> search(AttractionSearchOptionsDto searchOptions) {
+    public List<AttractionListResDto> search(AttractionSearchOptionsDto searchOptions) {
         return dao.search(searchOptions);
+    }
+
+    @Override
+    public AttractionDetailResDto getDetail(int attractionId) {
+        return null;
     }
 }

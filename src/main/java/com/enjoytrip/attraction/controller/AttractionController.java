@@ -1,5 +1,6 @@
 package com.enjoytrip.attraction.controller;
 
+import com.enjoytrip.attraction.dto.AttractionListResDto;
 import com.enjoytrip.attraction.dto.AttractionReviewCreateDto;
 import com.enjoytrip.attraction.dto.AttractionSearchOptionsDto;
 import com.enjoytrip.attraction.entity.Attraction;
@@ -28,7 +29,7 @@ public class AttractionController {
 
     @GetMapping("")
     public ResponseEntity<?> search(AttractionSearchOptionsDto options) {
-        List<Attraction> list = service.search(options);
+        List<AttractionListResDto> list = service.search(options);
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 검색 성공!", list);
     }
 
