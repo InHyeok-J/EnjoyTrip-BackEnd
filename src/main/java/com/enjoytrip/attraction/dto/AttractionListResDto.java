@@ -13,4 +13,5 @@ public class AttractionListResDto {
     private String address;
     private String attractionImageUrl;
     private int reviewsCount;
+    private double score;
 }
