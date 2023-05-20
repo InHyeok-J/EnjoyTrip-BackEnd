@@ -4,9 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.enjoytrip.attraction.dao.AttractionReviewMapper">
-    <select id="getReviewsByAttractionId" resultType="com.enjoytrip.attraction.entity.AttractionReview">
-        select id, title, content, score, user_id userId, attraction_id attractionId
-        from attraction_review where attraction_id=#{attractionId}
+    <select id="getReviewsByAttractionId" resultType="com.enjoytrip.attraction.dto.AttractionReviewResDto">
+        SELECT r.user_id AS userId, u.nickname, u.profile_img AS userProfileImg,
+               r.id AS 'review.id', r.title AS 'review.title', r.content AS 'review.content',
+                r.score AS 'review.score', r.user_id AS 'review.userId', r.attraction_id AS 'review.attractionId', r.created_at AS 'review.createdAt'
+        FROM attraction_review r
+                 INNER JOIN user u ON r.user_id = u.id
+        WHERE r.attraction_id = #{attractionId}
+    </select>
+
+    <select id="getEvaluation" resultType="com.enjoytrip.attraction.dto.AttractionReviewScoreDto">
+        SELECT
+            COUNT(*) AS reviewsCount,
+            AVG(score) AS score
+        FROM
+            attraction_review
+        WHERE attraction_id = #{attractionId}
     </select>
 
     <select id="getReviewsByUserId">
@@ -20,8 +33,8 @@
     </select>
 
     <insert id="writeReview" parameterType="com.enjoytrip.attraction.dto.AttractionReviewCreateDto">
-        insert into attraction_review(id, title, content, score, user_id, attraction_id)
-        values (null, #{title},#{content},#{score},#{userId},#{attractionId})
+        insert into attraction_review(id, title, content, score, user_id, attraction_id, created_at)
+        values (null, #{title},#{content},#{score},#{userId},#{attractionId}, CURRENT_TIMESTAMP)
     </insert>
 
     <delete id="deleteReview">

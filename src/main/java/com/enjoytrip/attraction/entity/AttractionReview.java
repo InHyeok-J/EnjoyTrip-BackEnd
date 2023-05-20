@@ -2,6 +2,8 @@ package com.enjoytrip.attraction.entity;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @NoArgsConstructor
 @Setter
@@ -15,5 +17,6 @@ public class AttractionReview {
     private int score;
     private Long userId;
     private Long attractionId;
+    private Date createdAt;
 
 }

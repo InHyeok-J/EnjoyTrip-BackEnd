@@ -1,9 +1,6 @@
 package com.enjoytrip.attraction.controller;
 
-import com.enjoytrip.attraction.dto.AttractionDetailResDto;
-import com.enjoytrip.attraction.dto.AttractionListResDto;
-import com.enjoytrip.attraction.dto.AttractionReviewCreateDto;
-import com.enjoytrip.attraction.dto.AttractionSearchOptionsDto;
+import com.enjoytrip.attraction.dto.*;
 import com.enjoytrip.attraction.entity.Attraction;
 import com.enjoytrip.attraction.entity.AttractionReview;
 import com.enjoytrip.attraction.service.AttractionReviewService;
@@ -41,14 +38,21 @@ public class AttractionController {
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 상세 조회 성공", dto);
     }
 
+    @GetMapping("/{attractionId}/evaluations")
+    public ResponseEntity<?> getEvaluations(@NotBlank @PathVariable String attractionId) {
+        AttractionReviewScoreDto dto = reviewService.getEvaluation(attractionId);
+        return JsonResponse.okWithData(HttpStatus.OK, "attraction 평가 조회 성공", dto);
+    }
+
     @GetMapping("/{attractionId}/reviews")
     public ResponseEntity<?> getReviewsByAttractionId(@NotBlank @PathVariable String attractionId) {
-        List<AttractionReview> list = reviewService.getReviewsByAttractionId(attractionId);
+        List<AttractionReviewResDto> list = reviewService.getReviewsByAttractionId(attractionId);
         return JsonResponse.okWithData(HttpStatus.OK, "관광지 아이디로 리뷰 검색 성공", list);
     }
 
     @PostMapping("/{attractionId}/reviews")
     public ResponseEntity<?> postReviews(@Valid @RequestBody AttractionReviewCreateDto reviewCreateDto, @AuthenticationPrincipal SessionUser sessionUser) {
+        if (sessionUser == null) return JsonResponse.fail("fail", HttpStatus.UNAUTHORIZED.value());
         AttractionReview review = reviewCreateDto.toEntity(sessionUser.getId());
         int res = reviewService.writeReview(review);
         if (res == 1) {
