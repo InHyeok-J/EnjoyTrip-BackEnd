@@ -28,4 +28,14 @@
             </if>
         LIMIT #{limit} OFFSET #{offset}
     </select>
+    <select id="getDetail"
+            resultType="com.enjoytrip.attraction.dto.AttractionDetailResDto">
+        SELECT a.id, a.category, a.attraction_name AS attractionName,
+               a.address, a.attraction_image_url AS attractionImageUrl,
+               d.overview as description
+        FROM attraction a
+        LEFT JOIN attraction_description d ON a.id = d.attraction_id
+        WHERE a.id = #{attractionId}
+
+    </select>
 </mapper>

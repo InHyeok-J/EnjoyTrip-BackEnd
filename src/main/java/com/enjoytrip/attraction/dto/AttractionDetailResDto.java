@@ -1,23 +1,22 @@
 package com.enjoytrip.attraction.dto;
 
+import com.enjoytrip.attraction.entity.AttractionReview;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
 public class AttractionDetailResDto {
+    private Integer id;
+    private Integer category;
     @NotBlank
-    private String title;
-    @NotBlank
-    private String content;
-    @NotNull
-    private Integer score;
-    @NotNull
-    private Long attractionId;
+    private String attractionName;
+    private String address;
+    private String attractionImageUrl;
+    private String description;
 }

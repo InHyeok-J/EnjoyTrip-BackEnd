@@ -1,5 +1,6 @@
 package com.enjoytrip.attraction.controller;
 
+import com.enjoytrip.attraction.dto.AttractionDetailResDto;
 import com.enjoytrip.attraction.dto.AttractionListResDto;
 import com.enjoytrip.attraction.dto.AttractionReviewCreateDto;
 import com.enjoytrip.attraction.dto.AttractionSearchOptionsDto;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +33,12 @@ public class AttractionController {
     public ResponseEntity<?> search(AttractionSearchOptionsDto options) {
         List<AttractionListResDto> list = service.search(options);
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 검색 성공!", list);
+    }
+
+    @GetMapping("/{attractionId}")
+    public ResponseEntity<?> getDetail(@NotBlank @PathVariable String attractionId) {
+        AttractionDetailResDto dto = service.getDetail(attractionId);
+        return JsonResponse.okWithData(HttpStatus.OK, "attraction 상세 조회 성공", dto);
     }
 
     @GetMapping("/{attractionId}/reviews")
