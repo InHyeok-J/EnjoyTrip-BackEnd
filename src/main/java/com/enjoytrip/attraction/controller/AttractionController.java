@@ -71,11 +71,10 @@ public class AttractionController {
 
     @PostMapping("/{attractionId}/reviews")
     public ResponseEntity<?> postReviews(@Valid @RequestBody AttractionReviewCreateDto reviewCreateDto, @AuthenticationPrincipal SessionUser sessionUser) {
-        if (sessionUser == null) return JsonResponse.fail("fail", HttpStatus.UNAUTHORIZED.value());
         AttractionReview review = reviewCreateDto.toEntity(sessionUser.getId());
-        int res = reviewService.writeReview(review);
-        if (res == 1) {
-            return JsonResponse.ok(HttpStatus.OK, "관광지 리뷰 작성 성공");
+        Long res = reviewService.writeReview(review);
+        if (res != null) {
+            return JsonResponse.okWithData(HttpStatus.OK, "관광지 리뷰 작성 성공", res);
         }
         return JsonResponse.fail("fail", HttpStatus.BAD_REQUEST.value());
     }

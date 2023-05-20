@@ -1,5 +1,6 @@
 package com.enjoytrip.attraction.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.Date;
@@ -11,6 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 @ToString
 public class AttractionReview {
+    @JsonProperty("reviewId")
     private Long id;
     private String title;
     private String content;

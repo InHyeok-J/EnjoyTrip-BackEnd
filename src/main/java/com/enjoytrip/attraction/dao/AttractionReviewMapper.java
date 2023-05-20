@@ -14,7 +14,7 @@ public interface AttractionReviewMapper {
     List<AttractionReview> getReviewsByUserId(String userId);
 
     AttractionReview getOneReview(String reviewId);
-    int writeReview(AttractionReview review);
+    Long writeReview(AttractionReview review);
     int deleteReview(String reviewId);
 
     AttractionReviewScoreDto getEvaluation(String attractionId);

@@ -13,7 +13,7 @@ public interface AttractionReviewService {
     AttractionReview getOneReview(String reviewId);
     AttractionReviewScoreDto getEvaluation(String attractionId);
 
-    int writeReview(AttractionReview review);
+    Long writeReview(AttractionReview review);
 
     int deleteReview(String id);
 }

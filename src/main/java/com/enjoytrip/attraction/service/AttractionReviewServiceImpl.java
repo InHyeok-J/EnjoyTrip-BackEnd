@@ -36,7 +36,7 @@ public class AttractionReviewServiceImpl implements AttractionReviewService {
     }
 
     @Override
-    public int writeReview(AttractionReview review) {
+    public Long writeReview(AttractionReview review) {
         return dao.writeReview(review);
     }
 

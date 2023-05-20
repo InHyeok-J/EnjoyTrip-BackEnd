@@ -32,9 +32,13 @@
         from attraction_review where id=#{reviewId}
     </select>
 
-    <insert id="writeReview" parameterType="com.enjoytrip.attraction.dto.AttractionReviewCreateDto">
-        insert into attraction_review(id, title, content, score, user_id, attraction_id, created_at)
-        values (null, #{title},#{content},#{score},#{userId},#{attractionId}, CURRENT_TIMESTAMP)
+    <insert id="writeReview" parameterType="com.enjoytrip.attraction.dto.AttractionReviewCreateDto"
+            useGeneratedKeys="true" keyProperty="id">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        insert into attraction_review(title, content, score, user_id, attraction_id, created_at)
+        values (#{title},#{content},#{score},#{userId},#{attractionId}, CURRENT_TIMESTAMP)
     </insert>
 
     <delete id="deleteReview">
