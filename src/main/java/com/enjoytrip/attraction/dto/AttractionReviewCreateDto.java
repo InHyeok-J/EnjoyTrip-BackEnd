@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 @NoArgsConstructor
 public class AttractionReviewCreateDto {
+    private Long id;
     @NotBlank
     private String title;
     @NotBlank
