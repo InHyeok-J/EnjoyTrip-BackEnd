@@ -8,5 +8,5 @@ import com.enjoytrip.attraction.entity.Attraction;
 import java.util.List;
 public interface AttractionService {
     List<AttractionListResDto> search(AttractionSearchOptionsDto searchOptions);
-    AttractionDetailResDto getDetail(int attractionId);
+    AttractionDetailResDto getDetail(String attractionId);
 }

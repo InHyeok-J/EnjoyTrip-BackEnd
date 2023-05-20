@@ -20,7 +20,7 @@ public class AttractionServiceImpl implements AttractionService {
     }
 
     @Override
-    public AttractionDetailResDto getDetail(int attractionId) {
-        return null;
+    public AttractionDetailResDto getDetail(String attractionId) {
+        return dao.getDetail(attractionId);
     }
 }

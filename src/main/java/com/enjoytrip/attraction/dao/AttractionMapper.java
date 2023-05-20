@@ -12,5 +12,5 @@ import java.util.List;
 public interface AttractionMapper {
     List<AttractionListResDto> search(AttractionSearchOptionsDto searchOptions);
 
-    AttractionDetailResDto getDetail(int attractionId);
+    AttractionDetailResDto getDetail(String attractionId);
 }
