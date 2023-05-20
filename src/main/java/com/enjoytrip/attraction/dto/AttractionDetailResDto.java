@@ -14,7 +14,6 @@ import java.util.List;
 public class AttractionDetailResDto {
     private Integer id;
     private Integer category;
-    @NotBlank
     private String attractionName;
     private String address;
     private String attractionImageUrl;

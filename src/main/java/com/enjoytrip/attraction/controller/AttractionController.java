@@ -12,10 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RequestMapping("/attractions")
@@ -33,19 +35,36 @@ public class AttractionController {
     }
 
     @GetMapping("/{attractionId}")
-    public ResponseEntity<?> getDetail(@NotBlank @PathVariable String attractionId) {
+    public ResponseEntity<?> getDetail(
+            @NotBlank(message = "attractionId는 필수입니다.")
+            @Pattern(regexp = "\\d+", message = "attractionId는 숫자로 이루어져야 합니다.")
+            @PathVariable String attractionId) {
+        if (!attractionId.matches("\\d+")) {
+            return JsonResponse.fail("attractionId는 숫자로 이루어져야 합니다.", HttpStatus.BAD_REQUEST.value());
+        }
         AttractionDetailResDto dto = service.getDetail(attractionId);
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 상세 조회 성공", dto);
     }
 
     @GetMapping("/{attractionId}/evaluations")
-    public ResponseEntity<?> getEvaluations(@NotBlank @PathVariable String attractionId) {
+    public ResponseEntity<?> getEvaluations(
+            @NotBlank
+            @Pattern(regexp = "\\d+", message = "attractionId는 숫자로 이루어져야 합니다.")
+            @PathVariable String attractionId) {
+        if (!attractionId.matches("\\d+")) {
+            return JsonResponse.fail("attractionId는 숫자로 이루어져야 합니다.", HttpStatus.BAD_REQUEST.value());
+        }
         AttractionReviewScoreDto dto = reviewService.getEvaluation(attractionId);
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 평가 조회 성공", dto);
     }
 
     @GetMapping("/{attractionId}/reviews")
-    public ResponseEntity<?> getReviewsByAttractionId(@NotBlank @PathVariable String attractionId) {
+    public ResponseEntity<?> getReviewsByAttractionId(@NotBlank
+                                                          @Pattern(regexp = "\\d+", message = "attractionId는 숫자로 이루어져야 합니다.")
+                                                          @PathVariable String attractionId) {
+        if (!attractionId.matches("\\d+")) {
+            return JsonResponse.fail("attractionId는 숫자로 이루어져야 합니다.", HttpStatus.BAD_REQUEST.value());
+        }
         List<AttractionReviewResDto> list = reviewService.getReviewsByAttractionId(attractionId);
         return JsonResponse.okWithData(HttpStatus.OK, "관광지 아이디로 리뷰 검색 성공", list);
     }
@@ -62,8 +81,9 @@ public class AttractionController {
     }
 
     @GetMapping("/{attractionId}/reviews/{reviewId}")
-
-    public ResponseEntity<?> getOneReview(@NotBlank @PathVariable String reviewId) {
+    public ResponseEntity<?> getOneReview(@NotBlank
+                                              @Pattern(regexp = "\\d+", message = "reviewId는 숫자로 이루어져야 합니다.")
+                                              @PathVariable String reviewId) {
         AttractionReview review = reviewService.getOneReview(reviewId);
         if (review == null) {
             return JsonResponse.fail("리뷰가 없습니다", HttpStatus.NOT_FOUND.value());
@@ -72,7 +92,9 @@ public class AttractionController {
     }
 
     @DeleteMapping("/{attractionId}/reviews/{reviewId}")
-    public ResponseEntity<?> deleteOneReview(@NotBlank @PathVariable String reviewId) {
+    public ResponseEntity<?> deleteOneReview(@NotBlank
+                                                 @Pattern(regexp = "\\d+", message = "reviewId는 숫자로 이루어져야 합니다.")
+                                                 @PathVariable String reviewId) {
         int res = reviewService.deleteReview(reviewId);
         if (res == 1) {
             return JsonResponse.okWithData(HttpStatus.OK, "관광지 리뷰 삭제 성공", res);
