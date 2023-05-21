@@ -5,15 +5,20 @@
 
 <mapper namespace="com.enjoytrip.user.dao.UserMapper">
 
-  <insert id="insert" parameterType="com.enjoytrip.user.entity.User" >
-    insert into user(id, email, role, provider, nickname,created_at,updated_at, deleted_at,password)
-    values (null, #{email}, #{role}, #{provider}, #{nickname}, now(),null,null, #{password})
+  <insert id="insert" parameterType="com.enjoytrip.user.entity.User" useGeneratedKeys="true" keyProperty="id">
+    insert into user(id, email, role, provider, nickname, created_at, updated_at, deleted_at,
+                     password, profile_img, sns_id)
+    values (null, #{email}, #{role}, #{provider}, #{nickname}, now(), null, null, #{password},
+            #{profileImg}, #{snsId})
   </insert>
 
   <select id="selectAll" resultType="com.enjoytrip.user.entity.User">
-    select * from user
+    select *
+    from user
   </select>
   <select id="selectByEmail" resultType="com.enjoytrip.user.entity.User" parameterType="string">
-    select * from user where email = #{email}
+    select *
+    from user
+    where email = #{email}
   </select>
 </mapper>

@@ -12,9 +12,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -84,7 +81,8 @@ public class AuthServiceImpl implements AuthService {
         setSessionUserInfo(user);
     }
 
-    private void setSessionUserInfo(User user) {
+    @Override
+    public void setSessionUserInfo(User user) {
         SecurityContext emptyContext = SecurityContextHolder.getContext();
         Collection<? extends GrantedAuthority> authorities = new ArrayList<>(
             Collections.singleton(new SimpleGrantedAuthority(user.getRole().name())));
