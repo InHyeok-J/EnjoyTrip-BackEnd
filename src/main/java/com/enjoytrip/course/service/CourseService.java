@@ -12,6 +12,6 @@ public interface CourseService {
     List<Course> CourseByUserId(Long userId);
     List<CourseAttraction> AttractionByCourseId(Long courseId);
     void makeCourse(CourseMakeRequest makeRequest);
-    void publicChange(Course course);
+    int publicChange(Course course);
     void courseLike(CourseLike like);
 }

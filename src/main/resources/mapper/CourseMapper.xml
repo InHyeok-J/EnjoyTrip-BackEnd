@@ -26,7 +26,7 @@
     </insert>
 
     <update id="publicChange" parameterType="com.enjoytrip.course.entity.Course">
-        update course set is_public = #{isPublic} where id = #{id}
+        update course set is_public = #{isPublic}, updated_at = now() where id = #{id}
     </update>
 
     <update id="updatedAtChange" parameterType="com.enjoytrip.course.entity.Course">

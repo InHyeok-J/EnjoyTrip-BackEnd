@@ -56,12 +56,8 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void publicChange(Course course) {
-        if(courseMapper.publicChange(course) == 0){
-            JsonResponse.fail("잘못된 입력입니다.", 400);
-        }
-
-        courseMapper.updatedAtChange(course.getId());
+    public int publicChange(Course course) {
+        return courseMapper.publicChange(course);
     }
 
     @Override

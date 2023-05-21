@@ -51,7 +51,9 @@ public class CourseController {
 
     @PatchMapping("/public")
     public ResponseEntity<?> publicChange(@RequestBody Course course){
-        courseService.publicChange(course);
+        if(courseService.publicChange(course) == 0){
+            return JsonResponse.fail("잘못된 입력입니다.", 400);
+        }
         return JsonResponse.okWithData(HttpStatus.OK, "Public Change 성공",course);
     }
     @PostMapping("/like")
