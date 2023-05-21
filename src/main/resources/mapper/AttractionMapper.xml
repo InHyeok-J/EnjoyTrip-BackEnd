@@ -5,20 +5,50 @@
 
 <mapper namespace="com.enjoytrip.attraction.dao.AttractionMapper">
 
-    <select id="search" parameterType="com.enjoytrip.attraction.dto.AttractionSearchOptionsDto" resultType="com.enjoytrip.attraction.entity.Attraction">
-        select id, category, attraction_name as attractionName,
-               address, attraction_image_url as attractionImageUrl,
-               latitude, longitude, sido_code as sidoCode, gugun_code as gugunCode
-               from attraction where category = #{category}
-                                 <if test="sidoCode != null">
-                                     and sido_code = #{sidoCode}
-                                 </if>
-                                <if test="gugunCode != null">
-                                    and gugun_code = #{gugunCode}
-                                </if>
-                                <if test="title != null and title != ''">
-                                    and attraction_name like concat('%', #{title}, '%')
-                                </if>
+    <select id="search" parameterType="com.enjoytrip.attraction.dto.AttractionSearchOptionsDto"
+            resultType="com.enjoytrip.attraction.dto.AttractionListResDto">
+
+        SELECT
+        a.id,
+        a.category,
+        a.attraction_name AS attractionName,
+        a.address,
+        a.attraction_image_url AS attractionImageUrl,
+        COALESCE(x.reviewsCount, 0) AS reviewsCount,
+        COALESCE(x.score, 0) AS score
+        FROM
+        attraction a
+        LEFT OUTER JOIN (
+        SELECT
+        attraction_id,
+        COUNT(*) AS reviewsCount,
+        AVG(score) AS score
+        FROM
+        attraction_review
+        GROUP BY
+        attraction_id
+        ) x ON a.id = x.attraction_id
+
+        WHERE category = #{category}
+            <if test="sidoCode != null">
+                AND sido_code = #{sidoCode}
+            </if>
+            <if test="gugunCode != null">
+                AND gugun_code = #{gugunCode}
+            </if>
+            <if test="title != null and title != ''">
+                AND attraction_name LIKE CONCAT('%', #{title}, '%')
+            </if>
         LIMIT #{limit} OFFSET #{offset}
+    </select>
+    <select id="getDetail"
+            resultType="com.enjoytrip.attraction.dto.AttractionDetailResDto">
+        SELECT a.id, a.category, a.attraction_name AS attractionName,
+               a.address, a.attraction_image_url AS attractionImageUrl,
+               d.overview as description
+        FROM attraction a
+        LEFT JOIN attraction_description d ON a.id = d.attraction_id
+        WHERE a.id = #{attractionId}
+
     </select>
 </mapper>

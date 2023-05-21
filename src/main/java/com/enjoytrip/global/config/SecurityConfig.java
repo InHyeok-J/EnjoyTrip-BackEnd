@@ -32,6 +32,7 @@ public class SecurityConfig {
 
         http.authorizeRequests()
             .antMatchers("/user", HttpMethod.GET.name()).authenticated()
+            .antMatchers(HttpMethod.POST, "/attractions/*/reviews/**").authenticated()
             .anyRequest().permitAll();
 
         http.exceptionHandling()
