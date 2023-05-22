@@ -31,3 +31,18 @@ oauth:
     client_key: ${KAKAO_CLIENT_KEY}
     redirect: 'http://localhost:3000/oauth/kakao/callback'
     admin_key: ${KAKAO_ADMIN_KEY}
+
+
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
+    s3:
+      bucket: ${AWS_BUCKET_NAME}
+      dir: /first
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
