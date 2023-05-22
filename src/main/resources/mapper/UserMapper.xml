@@ -5,7 +5,8 @@
 
 <mapper namespace="com.enjoytrip.user.dao.UserMapper">
 
-  <insert id="insert" parameterType="com.enjoytrip.user.entity.User" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.enjoytrip.user.entity.User" useGeneratedKeys="true"
+    keyProperty="id">
     insert into user(id, email, role, provider, nickname, created_at, updated_at, deleted_at,
                      password, profile_img, sns_id)
     values (null, #{email}, #{role}, #{provider}, #{nickname}, now(), null, null, #{password},
@@ -17,8 +18,47 @@
     from user
   </select>
   <select id="selectByEmail" resultType="com.enjoytrip.user.entity.User" parameterType="string">
-    select *
+    select id,
+           email,
+           role,
+           provider,
+           nickname,
+           created_at  as createdAt,
+           updated_at  as updatedAt,
+           deleted_at  as deletedAt,
+           password,
+           profile_img as profileImg,
+           sns_id      as snsId
     from user
     where email = #{email}
   </select>
+
+  <select id="selectById" resultType="com.enjoytrip.user.entity.User" parameterType="Long">
+    select id,
+           email,
+           role,
+           provider,
+           nickname,
+           created_at  as createdAt,
+           updated_at  as updatedAt,
+           deleted_at  as deletedAt,
+           password,
+           profile_img as profileImg,
+           sns_id      as snsId
+    from user
+    where id = #{id}
+  </select>
+
+  <update id="updateProfile" parameterType="com.enjoytrip.user.entity.User">
+    update user
+    set profile_img = #{profileImg},
+        nickname    = #{nickname}
+    where id = #{id}
+  </update>
+
+  <delete id="deleteById" parameterType="Long">
+    delete
+    from user
+    where id = ${id}
+  </delete>
 </mapper>
