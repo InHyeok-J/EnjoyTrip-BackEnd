@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   profiles:
     active: prod
@@ -25,3 +28,9 @@ mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+oauth:
+  kakao:
+    client_key: ${KAKAO_CLIENT_KEY}
+    redirect: 'http://localhost:3000/oauth/kakao/callback'
+    admin_key: ${KAKAO_ADMIN_KEY}

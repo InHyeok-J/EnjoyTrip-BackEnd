@@ -9,14 +9,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsUtils;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final SessionAuthenticationEntryPoint sessionAuthenticationEntryPoint;
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
@@ -30,6 +32,7 @@ public class SecurityConfig {
 
         http.authorizeRequests()
             .antMatchers("/user", HttpMethod.GET.name()).authenticated()
+            .antMatchers(HttpMethod.POST, "/attractions/*/reviews/**").authenticated()
             .anyRequest().permitAll();
 
         http.exceptionHandling()

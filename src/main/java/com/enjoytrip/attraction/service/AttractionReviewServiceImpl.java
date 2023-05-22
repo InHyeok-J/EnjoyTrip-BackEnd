@@ -2,6 +2,8 @@ package com.enjoytrip.attraction.service;
 
 import com.enjoytrip.attraction.dao.AttractionReviewMapper;
 import com.enjoytrip.attraction.dto.AttractionReviewCreateDto;
+import com.enjoytrip.attraction.dto.AttractionReviewResDto;
+import com.enjoytrip.attraction.dto.AttractionReviewScoreDto;
 import com.enjoytrip.attraction.entity.AttractionReview;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +16,7 @@ public class AttractionReviewServiceImpl implements AttractionReviewService {
     private final AttractionReviewMapper dao;
 
     @Override
-    public List<AttractionReview> getReviewsByAttractionId(String attractionId) {
+    public List<AttractionReviewResDto> getReviewsByAttractionId(String attractionId) {
         return dao.getReviewsByAttractionId(attractionId);
     }
 
@@ -29,7 +31,12 @@ public class AttractionReviewServiceImpl implements AttractionReviewService {
     }
 
     @Override
-    public int writeReview(AttractionReview review) {
+    public AttractionReviewScoreDto getEvaluation(String attractionId) {
+        return dao.getEvaluation(attractionId);
+    }
+
+    @Override
+    public Long writeReview(AttractionReview review) {
         return dao.writeReview(review);
     }
 

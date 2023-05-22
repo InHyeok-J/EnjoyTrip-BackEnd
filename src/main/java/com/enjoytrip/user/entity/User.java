@@ -20,6 +20,8 @@ public class User {
     private Long id;
     private String email;
     private String nickname;
+    private String profileImg;
+    private Long snsId;
     private String password;
     private Role role;
     private Provider provider;
