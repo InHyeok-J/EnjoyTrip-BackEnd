@@ -12,7 +12,6 @@ public class WebClientConfig {
     public WebClient kakaoAuthWebClient() {
         return WebClient.builder()
             .baseUrl("https://kauth.kakao.com")
-            .defaultHeader("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
             .build();
     }
 

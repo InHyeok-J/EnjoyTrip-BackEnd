@@ -16,6 +16,7 @@ public class KakaoOAuthProvider {
 
     private final WebClient kakaoAuthWebClient;
     private final WebClient kakaoApiWebClient;
+    private final String AUTH_HEADER = "Authorization";
 
     @Value("${oauth.kakao.client_key}")
     private String KAKAO_CLIENT_KEY;
@@ -31,6 +32,7 @@ public class KakaoOAuthProvider {
         try {
             KakaoTokenProperty result = kakaoAuthWebClient.post()
                 .uri(uri)
+                .header("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
                 .retrieve()
                 .bodyToMono(KakaoTokenProperty.class)
                 .block();
@@ -48,7 +50,7 @@ public class KakaoOAuthProvider {
         try {
             Map result = kakaoApiWebClient.post()
                 .uri(uri)
-                .header("Authorization", "Bearer " + token)
+                .header(AUTH_HEADER, "Bearer " + token)
                 .retrieve()
                 .bodyToMono(Map.class)
                 .block();
@@ -66,6 +68,23 @@ public class KakaoOAuthProvider {
         }
     }
 
+    public void signOutKakao(Long snsId) {
+        String UN_LINK_URI = unlinkUri(snsId);
+        try {
+            Map result = kakaoApiWebClient.post()
+                .uri(UN_LINK_URI)
+                .header(AUTH_HEADER, "KakaoAK " + KAKAO_ADMIN_KEY)
+                .header("Content-type", "application/x-www-form-urlencoded")
+                .retrieve()
+                .bodyToMono(Map.class)
+                .block();
+            System.out.println("result! " + result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException("카카오 인증 서버에러!", 500);
+        }
+    }
+
     private String oauthAccessTokenUri(String code) {
         StringBuilder sb = new StringBuilder();
         final String URI_PREFIX = "/oauth/token";
@@ -74,6 +93,15 @@ public class KakaoOAuthProvider {
             .append("&redirect_uri=").append(KAKAO_REDIRECT_URI)
             .append("&client_id=").append(KAKAO_CLIENT_KEY)
             .append("&code=").append(code);
+        return sb.toString();
+    }
+
+    private String unlinkUri(Long snsId) {
+        StringBuilder sb = new StringBuilder();
+        final String URI_PREFIX = "/v1/user/unlink";
+        sb.append(URI_PREFIX)
+            .append("?target_id_type=user_id")
+            .append("&target_id=").append(snsId);
         return sb.toString();
     }
 }

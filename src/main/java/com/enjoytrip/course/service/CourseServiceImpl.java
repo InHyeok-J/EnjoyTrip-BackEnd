@@ -1,12 +1,13 @@
 package com.enjoytrip.course.service;
 
-import com.enjoytrip.course.controller.dto.CourseManageRequest;
-import com.enjoytrip.course.controller.dto.CoursePublicChagne;
+import com.enjoytrip.course.controller.dto.CourseMakeRequest;
 import com.enjoytrip.course.dao.CourseMapper;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
-import com.enjoytrip.course.entity.CourseComment;
 import com.enjoytrip.course.entity.CourseLike;
+import com.enjoytrip.global.response.JsonResponse;
+import com.enjoytrip.user.entity.User;
+import com.enjoytrip.user.dao.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,43 +20,44 @@ public class CourseServiceImpl implements CourseService{
     private final CourseMapper courseMapper;
 
     @Override
-    public List<Course> CourseByUser(Long userId) {
-        return courseMapper.CourseByUser(userId);
+    public List<Course> SelectAll() {
+        return courseMapper.SelectAll();
     }
 
     @Override
-    public void makeCourse(Course course) {
+    public List<Course> CourseByUserId(Long userId) {
+        return courseMapper.CourseByUserId(userId);
+    }
+
+    @Override
+    public List<CourseAttraction> AttractionByCourseId(Long courseId) {
+        return courseMapper.AttractionByCourseId(courseId);
+    }
+
+    @Override
+    public void makeCourse(CourseMakeRequest makeRequest) {
+        Course course = Course.builder()
+                .userId(makeRequest.getUserId())
+                .title(makeRequest.getTitle())
+                .isPublic(makeRequest.getIsPublic())
+                .build();
         courseMapper.makeCourse(course);
+
+        if(course.getId() != null){
+            CourseAttraction courseAttraction = CourseAttraction.builder()
+                    .courseId(course.getId())
+                    .build();
+            for (Long attractionId : makeRequest.getAttractionIds()) {
+                courseAttraction.setAttractionId(attractionId);
+                courseMapper.insertAttraction(courseAttraction);
+            }
+        }
+
     }
 
     @Override
-    public Long nextTurn(Long userId) {
-        return courseMapper.nextTurn(userId);
-    }
-
-    @Override
-    public void insertCourse(CourseManageRequest maxTurnRequest) {
-        courseMapper.insertCourse(maxTurnRequest);
-    }
-
-    @Override
-    public void courseChange(CourseManageRequest manageRequest) {
-        courseMapper.courseChange(manageRequest);
-    }
-
-    @Override
-    public void updatedAtChange(Long courseId) {
-        courseMapper.updatedAtChange(courseId);
-    }
-
-    @Override
-    public void publicChange(CoursePublicChagne publicChagne) {
-        courseMapper.publicChange(publicChagne);
-    }
-
-    @Override
-    public void commentAdd(CourseComment comment) {
-        courseMapper.commentAdd(comment);
+    public int publicChange(Course course) {
+        return courseMapper.publicChange(course);
     }
 
     @Override
