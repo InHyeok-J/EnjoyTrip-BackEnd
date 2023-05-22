@@ -36,7 +36,6 @@ oauth:
     admin_key: ${KAKAO_ADMIN_KEY}
 
 
-
 cloud:
   aws:
     credentials:
@@ -44,8 +43,8 @@ cloud:
       secretKey: ${AWS_SECRET_ACCESS_KEY}
     s3:
       bucket: ${AWS_BUCKET_NAME}
-      dir: /first
-    region:
-      static: ap-northeast-2
+      dir: /first/
+    region: ap-northeast-2
+    url: ${AWS_BUCKET_URL}
     stack:
       auto: false
