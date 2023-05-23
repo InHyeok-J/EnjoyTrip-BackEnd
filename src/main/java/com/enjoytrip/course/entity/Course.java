@@ -17,4 +17,7 @@ public class Course {
     private Boolean isPublic; // 공개 여부
     private LocalDateTime createdAt; //생성 날짜
     private LocalDateTime updatedAt; // 수정 날짜
+    private String description; // 설명
+    private String courseImgUrl; // 섬네일
+    private int schedule; // 몇박인지
 }

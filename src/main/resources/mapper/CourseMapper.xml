@@ -7,14 +7,39 @@
     <select id="SelectAll" resultType="com.enjoytrip.course.entity.Course">
         select * from course
     </select>
-
+    <select id="SelectOneByCourseId" parameterType="Long" resultType="com.enjoytrip.course.entity.Course">
+        select * from course where id = #{id}
+    </select>
     <select id="CourseByUserId" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
         select *
         from course where user_id = #{userId}
     </select>
     <select id="AttractionByCourseId" parameterType="long" resultType="com.enjoytrip.course.entity.CourseAttraction">
+        select c.id, c.course_id, c.attraction_id, c.turn, c.day, a.attraction_name, a.address, a.attraction_image_url, a.latitude, a.longitude
+        from attraction a join course_attraction c
+        on a.id = c.attraction_id
+        where c.course_id = #{courseId};
+    </select>
+    <select id="GetCourseExample" parameterType="long" resultType="com.enjoytrip.course.entity.CourseAttraction">
+        select a.attraction_name
+        from attraction a join course_attraction c
+        on a.id = c.attraction_id
+        where c.course_id = #{courseId};
+    </select>
+
+    <select id="likeCnt" parameterType="long" resultType="int">
+        select count(*)
+        from course_like where course_id = #{courseId}
+    </select>
+
+    <select id="commentCnt" parameterType="long" resultType="int">
+        select count(*)
+        from course_comment where course_id = #{courseId}
+    </select>
+
+    <select id="commentsByCourseId" parameterType="Long" resultType="com.enjoytrip.course.entity.CourseComment">
         select *
-        from course_attraction where course_id = #{courseId}
+        from course_comment where course_id = #{courseId}
     </select>
 
     <insert id="makeCourse" parameterType="com.enjoytrip.course.entity.Course" useGeneratedKeys="true" keyProperty="id">
@@ -35,5 +60,9 @@
 
     <insert id="courseLike" parameterType="com.enjoytrip.course.entity.CourseLike" >
         insert into course_like(course_id, user_id) values(#{courseId}, #{userId})
+    </insert>
+
+    <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment" >
+        insert into course_comment values(null,#{courseId}, #{userId},#{content},now(),now())
     </insert>
 </mapper>
