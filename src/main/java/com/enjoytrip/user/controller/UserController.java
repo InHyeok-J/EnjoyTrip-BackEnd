@@ -56,4 +56,5 @@ public class UserController {
         session.invalidate();
         return JsonResponse.ok(HttpStatus.OK, "회원 탈퇴 성공!");
     }
+
 }
