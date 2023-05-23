@@ -11,6 +11,7 @@
         SELECT
         a.id,
         a.category,
+        a.category_mean AS categoryMean,
         a.attraction_name AS attractionName,
         a.address,
         a.attraction_image_url AS attractionImageUrl,
@@ -29,26 +30,41 @@
         attraction_id
         ) x ON a.id = x.attraction_id
 
-        WHERE category = #{category}
+        <where>
+            <if test="category != null">
+                AND category = #{category}
+            </if>
             <if test="sidoCode != null">
                 AND sido_code = #{sidoCode}
             </if>
             <if test="gugunCode != null">
                 AND gugun_code = #{gugunCode}
             </if>
-            <if test="title != null and title != ''">
+            <if test="title != null">
                 AND attraction_name LIKE CONCAT('%', #{title}, '%')
             </if>
+        </where>
+
         LIMIT #{limit} OFFSET #{offset}
     </select>
     <select id="getDetail"
             resultType="com.enjoytrip.attraction.dto.AttractionDetailResDto">
-        SELECT a.id, a.category, a.attraction_name AS attractionName,
-               a.address, a.attraction_image_url AS attractionImageUrl,
-               d.overview as description
+        SELECT a.id,
+               a.category,
+               a.category_mean        AS categoryMean,
+               a.attraction_name      AS attractionName,
+               a.address,
+               a.attraction_image_url AS attractionImageUrl,
+               d.overview             as description
         FROM attraction a
-        LEFT JOIN attraction_description d ON a.id = d.attraction_id
-        WHERE a.id = #{attractionId}
+                 LEFT JOIN attraction_description d ON a.id = d.attraction_id
+        WHERE a.id = #{attractionId};
 
+
+    </select>
+    <select id="getGugun" resultType="com.enjoytrip.attraction.dto.AttractionGugunDto">
+        select gugun_code AS gugunCode, gugun_name AS gugunName
+        from gugun
+        where sido_code = #{sidoCode}
     </select>
 </mapper>
