@@ -13,4 +13,6 @@ public interface UserService {
     User modifyProfile(ModifyUserProfileRequest requestDto,Long userId);
 
     void signOut(Long id);
+
+    User selectNicknameProfileByCourseId(Long id);
 }

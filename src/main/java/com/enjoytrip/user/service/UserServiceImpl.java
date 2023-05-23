@@ -91,4 +91,9 @@ public class UserServiceImpl implements UserService {
 
         userMapper.deleteById(id);
     }
+
+    @Override
+    public User selectNicknameProfileByCourseId(Long id) {
+        return userMapper.selectNicknameProfileByCourseId(id);
+    }
 }
