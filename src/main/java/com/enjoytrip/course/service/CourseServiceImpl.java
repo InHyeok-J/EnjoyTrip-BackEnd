@@ -1,14 +1,12 @@
 package com.enjoytrip.course.service;
 
-import com.enjoytrip.course.controller.dto.CourseComments;
-import com.enjoytrip.course.controller.dto.CourseDetail;
-import com.enjoytrip.course.controller.dto.CourseList;
-import com.enjoytrip.course.controller.dto.CourseMakeRequest;
+import com.enjoytrip.course.controller.dto.*;
 import com.enjoytrip.course.dao.CourseMapper;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
 import com.enjoytrip.course.entity.CourseComment;
 import com.enjoytrip.course.entity.CourseLike;
+import com.enjoytrip.global.dto.SessionUser;
 import com.enjoytrip.global.response.JsonResponse;
 import com.enjoytrip.user.entity.User;
 import com.enjoytrip.user.dao.UserMapper;
@@ -31,7 +29,7 @@ public class CourseServiceImpl implements CourseService{
         List<Course> courseList = courseMapper.SelectAll();
 
         for (Course course: courseList) {
-            User user = userMapper.selectNicknameProfileByCourseId(course.getUserId());
+            User user = userMapper.selectNicknameProfileByUserId(course.getUserId());
             String nickname = user.getNickname();
             StringBuilder courseExample = new StringBuilder();
             List<CourseAttraction> courseAttraction = courseMapper.GetCourseExample(course.getId());
@@ -50,10 +48,10 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public CourseDetail SelectOneByCourseId(Long id) {
+    public CourseDetail SelectOneByCourseId(Long courseId, SessionUser sessionUser) {
         CourseDetail courseDetail = null;
-        Course course = courseMapper.SelectOneByCourseId(id);
-        User user = userMapper.selectNicknameProfileByCourseId(course.getUserId());
+        Course course = courseMapper.SelectOneByCourseId(courseId);
+        User user = userMapper.selectNicknameProfileByUserId(course.getUserId());
         String nickname = user.getNickname();
         String profileImg = user.getProfileImg();
         int likeCnt = courseMapper.likeCnt(course.getId());
@@ -81,14 +79,21 @@ public class CourseServiceImpl implements CourseService{
             attractionCnt++;
         }
 
-        List<CourseComments> comments = courseMapper.commentsByCourseId(course.getId());
-//        for (int i = 0; i < comments.size(); i++ ) {
-////            User u = userMapper.selectNicknameProfileByCourseId(comments.get(i).getCourseComment().getCourseId());
-////            comments.get(i).setNickname(u.getNickname());
-//        }
+        List<CourseComment> comment = courseMapper.commentsByCourseId(course.getId());
+        List<CourseComments> comments = new ArrayList<>();
+        for (CourseComment cc: comment) {
+            User u = userMapper.selectNicknameProfileByUserId(cc.getUserId());
+            comments.add(new CourseComments(cc, u.getNickname(),u.getProfileImg()));
+        }
 
+        CourseLikeCheck courseLikeCheck = new CourseLikeCheck(sessionUser.getId(), courseId);
+//        boolean isLike = likeCheck==1?true:false;
+        boolean isLike = true;
+        if(courseMapper.likeCheckByCourseIdUserId(courseLikeCheck) == 0){
+            isLike = false;
+        }
 
-        courseDetail = new CourseDetail(course, nickname,profileImg, days,likeCnt,commentCnt,attractionCnt,plans,comments);
+        courseDetail = new CourseDetail(course, nickname,profileImg, days,likeCnt,commentCnt,attractionCnt,plans,comments,isLike);
         return courseDetail;
     }
 

@@ -12,4 +12,5 @@ import lombok.*;
 public class CourseComments {
     private CourseComment courseComment;
     private String nickname;
+    private String profileImgUrl;
 }

@@ -10,7 +10,7 @@ public interface UserMapper {
     int insert(User user);
     User selectById(Long id);
     List<User> selectAll();
-    User selectNicknameProfileByCourseId(Long id);
+    User selectNicknameProfileByUserId(Long userid);
     User selectByEmail(String email);
 
     int updateProfile(User user);
