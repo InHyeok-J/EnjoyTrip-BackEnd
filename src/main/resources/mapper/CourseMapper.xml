@@ -42,6 +42,11 @@
         from course_comment where course_id = #{courseId}
     </select>
 
+    <select id="likeCheckByCourseIdUserId" parameterType="com.enjoytrip.course.controller.dto.CourseLikeCheck" resultType="int">
+        select count(id)
+        from course_like where course_id = #{courseId} and user_id = #{userId}
+    </select>
+
     <insert id="makeCourse" parameterType="com.enjoytrip.course.entity.Course" useGeneratedKeys="true" keyProperty="id">
         insert into course values(null, #{userId}, #{title}, #{isPublic}, now(), now())
     </insert>

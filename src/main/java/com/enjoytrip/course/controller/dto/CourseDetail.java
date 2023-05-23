@@ -18,9 +18,12 @@ public class CourseDetail {
     private String nickname;
     private String profileImg;
     private String days; // 몇박인지
-    private int likeCnt;
-    private int commentCnt;
-    private int attractionCnt;
-    private List<List<CourseAttraction>> plans;
-    private List<CourseComments> comments;
+    private int likeCnt; // 좋아요 개수
+    private int commentCnt; // 댓글 개수
+    private int attractionCnt; // 관광지 개수
+    private List<List<CourseAttraction>> plans; // 날짜별로 어트렉션
+    private List<CourseComments> comments; // 댓글
+    private Boolean isLike;
+
+
 }

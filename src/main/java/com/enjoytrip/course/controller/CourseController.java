@@ -32,8 +32,8 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> selectOne(@PathVariable Long id){
-        CourseDetail courseDetail = courseService.SelectOneByCourseId(id);
+    public ResponseEntity<?> selectOne(@PathVariable Long id, @AuthenticationPrincipal SessionUser sessionUser){
+        CourseDetail courseDetail = courseService.SelectOneByCourseId(id, sessionUser);
         return JsonResponse.okWithData(HttpStatus.OK, "Course Detail 검색 성공", courseDetail);
     }
 
@@ -56,7 +56,7 @@ public class CourseController {
     @GetMapping("/attractions")
     public ResponseEntity<?> attractionByCourseId(Long courseId){
         List<CourseAttraction> list =courseService.AttractionByCourseId(courseId);
-        return JsonResponse.okWithData(HttpStatus.OK, "MyCourse 검색 성공", list);
+        return JsonResponse.okWithData(HttpStatus.OK, "내 코스 상세보기 검색 성공", list);
     }
 
     @PatchMapping("/public")

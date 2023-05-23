@@ -7,12 +7,13 @@ import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
 import com.enjoytrip.course.entity.CourseComment;
 import com.enjoytrip.course.entity.CourseLike;
+import com.enjoytrip.global.dto.SessionUser;
 
 import java.util.List;
 
 public interface CourseService {
     List<CourseList> SelectAll();
-    CourseDetail SelectOneByCourseId(Long courseId);
+    CourseDetail SelectOneByCourseId(Long courseId, SessionUser sessionUser);
     List<Course> CourseByUserId(Long userId);
     List<CourseAttraction> AttractionByCourseId(Long courseId);
     void makeCourse(CourseMakeRequest makeRequest);
