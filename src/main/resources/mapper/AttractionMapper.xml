@@ -49,17 +49,30 @@
     </select>
     <select id="getDetail"
             resultType="com.enjoytrip.attraction.dto.AttractionDetailResDto">
-        SELECT a.id,
-               a.category,
-               a.category_mean        AS categoryMean,
-               a.attraction_name      AS attractionName,
-               a.address,
-               a.attraction_image_url AS attractionImageUrl,
-               d.overview             as description
-        FROM attraction a
-                 LEFT JOIN attraction_description d ON a.id = d.attraction_id
-        WHERE a.id = #{attractionId};
-
+        SELECT
+            a.id,
+            a.category,
+            a.category_mean AS categoryMean,
+            a.attraction_name AS attractionName,
+            a.address,
+            a.attraction_image_url AS attractionImageUrl,
+            d.overview AS description,
+            COALESCE(x.reviewsCount, 0) AS reviewsCount,
+            COALESCE(x.score, 0) AS score
+        FROM
+            attraction a
+                LEFT JOIN (
+                SELECT
+                    attraction_id,
+                    COUNT(*) AS reviewsCount,
+                    AVG(score) AS score
+                FROM
+                    attraction_review
+                GROUP BY
+                    attraction_id
+            ) x ON a.id = x.attraction_id
+                LEFT JOIN attraction_description d ON a.id = d.attraction_id
+        WHERE a.id = #{attractionId}
 
     </select>
     <select id="getGugun" resultType="com.enjoytrip.attraction.dto.AttractionGugunDto">
