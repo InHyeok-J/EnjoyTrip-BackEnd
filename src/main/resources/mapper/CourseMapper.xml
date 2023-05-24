@@ -5,19 +5,19 @@
 
 <mapper namespace="com.enjoytrip.course.dao.CourseMapper">
     <select id="SelectAll" resultType="com.enjoytrip.course.entity.Course">
-        select id,user_id,title, is_public,date(created_at), date(updated_at), description, course_img_url, schedule
+        select *
         from course
     </select>
     <select id="SelectOneByCourseId" parameterType="Long" resultType="com.enjoytrip.course.entity.Course">
-        select id,user_id,title, is_public,date(created_at), date(updated_at), description, course_img_url, schedule
+        select *
         from course where id = #{id}
     </select>
     <select id="CourseByUserId" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
-        select id,user_id,title, is_public,date(created_at), date(updated_at), description, course_imgIurl, schedule
+        select *
         from course where user_id = #{userId}
     </select>
     <select id="AttractionByCourseId" parameterType="long" resultType="com.enjoytrip.course.entity.CourseAttraction">
-        select c.id, c.course_id, c.attraction_id, c.turn, c.day, a.attraction_name, a.address, a.attraction_image_url, a.latitude, a.longitude
+        select c.id, c.course_id, c.attraction_id, c.turn, c.day,c.date, a.attraction_name, a.address, a.attraction_image_url, a.latitude, a.longitude
         from attraction a join course_attraction c
         on a.id = c.attraction_id
         where c.course_id = #{courseId};
@@ -40,8 +40,8 @@
     </select>
 
     <select id="commentsByCourseId" parameterType="Long" resultType="com.enjoytrip.course.entity.CourseComment">
-        select id,course_id, user_id,content,date(created_at), date(updated_at)
-        from course_comment where course_id = #{courseId}
+        select *
+        from course_comment where course_id = #{courseId} order by id desc
     </select>
 
     <select id="likeCheckByCourseIdUserId" parameterType="com.enjoytrip.course.entity.CourseLike" resultType="boolean">
@@ -50,8 +50,8 @@
     </select>
 
     <select id="commentByCommentId" parameterType="Long" resultType="com.enjoytrip.course.entity.CourseComment">
-        select id,course_id, user_id,content,date(created_at), date(updated_at)
-        from course_comment where id = #{id}
+        select *
+        from course_comment where id = #{id} order by id desc
     </select>
 
     <insert id="makeCourse" parameterType="com.enjoytrip.course.entity.Course" useGeneratedKeys="true" keyProperty="id">
@@ -66,8 +66,9 @@
         insert into course_like(course_id, user_id) values(#{courseId}, #{userId})
     </insert>
 
-    <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment"  useGeneratedKeys="true" keyProperty="id">
-        insert into course_comment values(null,#{courseId}, #{userId},#{content},now(),now())
+    <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment" useGeneratedKeys="true" keyProperty="id">
+        insert into course_comment
+        values(null,#{courseId}, #{userId},#{content},now(),now())
     </insert>
 
     <update id="publicChange" parameterType="com.enjoytrip.course.entity.Course">

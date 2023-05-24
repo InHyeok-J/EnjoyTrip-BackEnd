@@ -2,6 +2,8 @@ package com.enjoytrip.course.entity;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
@@ -19,6 +21,5 @@ public class CourseAttraction {
     private String latitude; //위도
     private String longitude; //경도
     private int day; // 몇번째 날인지
-    
-    
+    private LocalDateTime date;
 }

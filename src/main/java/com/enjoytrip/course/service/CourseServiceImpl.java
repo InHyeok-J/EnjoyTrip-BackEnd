@@ -137,14 +137,11 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public CourseComments commentAdd(CourseComment courseComment) {
         courseMapper.commentAdd(courseComment);
-
         if(courseComment.getId()> 0){
             User user = userMapper.selectNicknameProfileByUserId(courseComment.getUserId());
             String nickname = user.getNickname();
             String profileImgUrl = user.getProfileImg();
             courseComment = courseMapper.commentByCommentId(courseComment.getId());
-            System.out.println(courseComment.getId());
-            System.out.println(courseMapper.commentByCommentId(17L));
             CourseComments courseComments = new CourseComments(courseComment,nickname,profileImgUrl);
             return courseComments;
         }else {

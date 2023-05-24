@@ -5,6 +5,7 @@ import com.enjoytrip.course.entity.CourseAttraction;
 import com.enjoytrip.course.entity.CourseComment;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
