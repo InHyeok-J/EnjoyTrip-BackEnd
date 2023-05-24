@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User selectNicknameProfileByCourseId(Long id) {
-        return userMapper.selectNicknameProfileByCourseId(id);
+    public User selectNicknameProfileByCourseId(Long userid) {
+        return userMapper.selectNicknameProfileByUserId(userid);
     }
 }
