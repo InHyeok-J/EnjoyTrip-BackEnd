@@ -5,13 +5,15 @@
 
 <mapper namespace="com.enjoytrip.course.dao.CourseMapper">
     <select id="SelectAll" resultType="com.enjoytrip.course.entity.Course">
-        select * from course
+        select id,user_id,title, is_public,date(created_at), date(updated_at), description, course_img_url, schedule
+        from course
     </select>
     <select id="SelectOneByCourseId" parameterType="Long" resultType="com.enjoytrip.course.entity.Course">
-        select * from course where id = #{id}
+        select id,user_id,title, is_public,date(created_at), date(updated_at), description, course_img_url, schedule
+        from course where id = #{id}
     </select>
     <select id="CourseByUserId" parameterType="long" resultType="com.enjoytrip.course.entity.Course">
-        select *
+        select id,user_id,title, is_public,date(created_at), date(updated_at), description, course_imgIurl, schedule
         from course where user_id = #{userId}
     </select>
     <select id="AttractionByCourseId" parameterType="long" resultType="com.enjoytrip.course.entity.CourseAttraction">
@@ -29,7 +31,7 @@
 
     <select id="likeCnt" parameterType="long" resultType="int">
         select count(*)
-        from course_like where course_id = #{courseId}
+        from course_like where course_id = #{courseId} and is_like = 1
     </select>
 
     <select id="commentCnt" parameterType="long" resultType="int">
@@ -38,13 +40,18 @@
     </select>
 
     <select id="commentsByCourseId" parameterType="Long" resultType="com.enjoytrip.course.entity.CourseComment">
-        select *
+        select id,course_id, user_id,content,date(created_at), date(updated_at)
         from course_comment where course_id = #{courseId}
     </select>
 
-    <select id="likeCheckByCourseIdUserId" parameterType="com.enjoytrip.course.controller.dto.CourseLikeCheck" resultType="int">
-        select count(id)
+    <select id="likeCheckByCourseIdUserId" parameterType="com.enjoytrip.course.entity.CourseLike" resultType="boolean">
+        select is_like
         from course_like where course_id = #{courseId} and user_id = #{userId}
+    </select>
+
+    <select id="commentByCommentId" parameterType="Long" resultType="com.enjoytrip.course.entity.CourseComment">
+        select id,course_id, user_id,content,date(created_at), date(updated_at)
+        from course_comment where id = #{id}
     </select>
 
     <insert id="makeCourse" parameterType="com.enjoytrip.course.entity.Course" useGeneratedKeys="true" keyProperty="id">
@@ -55,19 +62,27 @@
         insert into course_attraction values(null, #{courseId}, #{attractionId});
     </insert>
 
-    <update id="publicChange" parameterType="com.enjoytrip.course.entity.Course">
-        update course set is_public = #{isPublic}, updated_at = now() where id = #{id}
-    </update>
-
-    <update id="updatedAtChange" parameterType="com.enjoytrip.course.entity.Course">
-        update course set updated_at=now() where id = #{id}
-    </update>
-
     <insert id="courseLike" parameterType="com.enjoytrip.course.entity.CourseLike" >
         insert into course_like(course_id, user_id) values(#{courseId}, #{userId})
     </insert>
 
-    <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment" >
+    <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment"  useGeneratedKeys="true" keyProperty="id">
         insert into course_comment values(null,#{courseId}, #{userId},#{content},now(),now())
     </insert>
+
+    <update id="publicChange" parameterType="com.enjoytrip.course.entity.Course">
+        update course set is_public = #{isPublic}, updated_at = now() where id = #{id}
+    </update>
+
+    <update id="likeChange" parameterType="com.enjoytrip.course.entity.CourseLike">
+        update course_like
+        <if test="isLike == true">
+            set is_like = false
+        </if>
+        <if test="isLike == false">
+            set is_like = true
+        </if>
+        where course_id = #{courseId} and user_id = #{userId}
+    </update>
+
 </mapper>

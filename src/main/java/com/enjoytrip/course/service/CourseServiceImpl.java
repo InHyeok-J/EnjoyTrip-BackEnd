@@ -86,12 +86,8 @@ public class CourseServiceImpl implements CourseService{
             comments.add(new CourseComments(cc, u.getNickname(),u.getProfileImg()));
         }
 
-        CourseLikeCheck courseLikeCheck = new CourseLikeCheck(sessionUser.getId(), courseId);
-//        boolean isLike = likeCheck==1?true:false;
-        boolean isLike = true;
-        if(courseMapper.likeCheckByCourseIdUserId(courseLikeCheck) == 0){
-            isLike = false;
-        }
+        CourseLike courseLike = new CourseLike(courseId, sessionUser.getId(),false);
+        boolean isLike = courseMapper.likeCheckByCourseIdUserId(courseLike);
 
         courseDetail = new CourseDetail(course, nickname,profileImg, days,likeCnt,commentCnt,attractionCnt,plans,comments,isLike);
         return courseDetail;
@@ -139,7 +135,25 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void commentAdd(CourseComment courseComment) {
+    public CourseComments commentAdd(CourseComment courseComment) {
         courseMapper.commentAdd(courseComment);
+
+        if(courseComment.getId()> 0){
+            User user = userMapper.selectNicknameProfileByUserId(courseComment.getUserId());
+            String nickname = user.getNickname();
+            String profileImgUrl = user.getProfileImg();
+            courseComment = courseMapper.commentByCommentId(courseComment.getId());
+            System.out.println(courseComment.getId());
+            System.out.println(courseMapper.commentByCommentId(17L));
+            CourseComments courseComments = new CourseComments(courseComment,nickname,profileImgUrl);
+            return courseComments;
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean likeChange(CourseLike courseLike) {
+        return courseMapper.likeChange(courseLike)==1?!courseLike.getIsLike():courseLike.getIsLike();
     }
 }

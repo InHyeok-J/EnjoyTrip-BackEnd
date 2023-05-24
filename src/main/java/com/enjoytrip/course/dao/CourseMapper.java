@@ -1,8 +1,5 @@
 package com.enjoytrip.course.dao;
 
-import com.enjoytrip.course.controller.dto.CourseComments;
-import com.enjoytrip.course.controller.dto.CourseDetail;
-import com.enjoytrip.course.controller.dto.CourseLikeCheck;
 import com.enjoytrip.course.entity.Course;
 import com.enjoytrip.course.entity.CourseAttraction;
 import com.enjoytrip.course.entity.CourseComment;
@@ -26,6 +23,7 @@ public interface CourseMapper {
     void courseLike(CourseLike like);
     void commentAdd(CourseComment courseComment);
     List<CourseComment> commentsByCourseId(Long courseId);
-
-    int likeCheckByCourseIdUserId(CourseLikeCheck courseLikeCheck);
+    boolean likeCheckByCourseIdUserId(CourseLike courseLike);
+    int likeChange(CourseLike courseLike);
+    CourseComment commentByCommentId(Long id);
 }
