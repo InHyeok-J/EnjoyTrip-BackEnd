@@ -1,5 +1,6 @@
 package com.enjoytrip.course.controller;
 
+import com.enjoytrip.course.controller.dto.CourseComments;
 import com.enjoytrip.course.controller.dto.CourseDetail;
 import com.enjoytrip.course.controller.dto.CourseList;
 import com.enjoytrip.course.controller.dto.CourseMakeRequest;
@@ -72,11 +73,19 @@ public class CourseController {
         courseService.courseLike(like);
         return JsonResponse.ok(HttpStatus.OK, "Comment Like 성공");
     }
-
+    @PatchMapping("/like")
+    public ResponseEntity<?> likeChange(@RequestBody CourseLike courseLike, @AuthenticationPrincipal SessionUser sessionUser){
+        courseLike.setUserId(sessionUser.getId());
+        boolean isLike = courseService.likeChange(courseLike);
+        return JsonResponse.okWithData(HttpStatus.OK, "Like Change 성공",isLike);
+    }
     @PostMapping("/comment")
-    public ResponseEntity<?> courseComment(@RequestBody CourseComment courseComment, @AuthenticationPrincipal SessionUser sessionUser){
+    public ResponseEntity<?> commentAdd(@RequestBody CourseComment courseComment, @AuthenticationPrincipal SessionUser sessionUser){
         courseComment.setUserId(sessionUser.getId());
-        courseService.commentAdd(courseComment);
-        return JsonResponse.ok(HttpStatus.OK, "Comment Like 성공");
+        CourseComments courseComments = courseService.commentAdd(courseComment);
+        if(courseComments == null){
+            return JsonResponse.fail("값을 확인해주세요",400);
+        }
+        return JsonResponse.okWithData(HttpStatus.OK, "Comment add 성공", courseComments);
     }
 }

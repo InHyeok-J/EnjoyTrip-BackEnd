@@ -1,5 +1,6 @@
 package com.enjoytrip.course.service;
 
+import com.enjoytrip.course.controller.dto.CourseComments;
 import com.enjoytrip.course.controller.dto.CourseDetail;
 import com.enjoytrip.course.controller.dto.CourseList;
 import com.enjoytrip.course.controller.dto.CourseMakeRequest;
@@ -19,5 +20,6 @@ public interface CourseService {
     void makeCourse(CourseMakeRequest makeRequest);
     int publicChange(Course course);
     void courseLike(CourseLike like);
-    void commentAdd(CourseComment courseComment);
+    CourseComments commentAdd(CourseComment courseComment);
+    boolean likeChange(CourseLike courseLike);
 }

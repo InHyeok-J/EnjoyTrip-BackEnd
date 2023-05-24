@@ -11,4 +11,5 @@ import lombok.*;
 public class CourseLike {
     private Long courseId;
     private Long userId;
+    private Boolean isLike;
 }
