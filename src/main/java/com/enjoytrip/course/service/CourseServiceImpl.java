@@ -111,8 +111,11 @@ public class CourseServiceImpl implements CourseService{
             comments.add(new CourseComments(cc, u.getNickname(),u.getProfileImg()));
         }
 
-        CourseLike courseLike = new CourseLike(courseId, sessionUser.getId(),false);
-        Boolean isLike = courseMapper.likeCheckByCourseIdUserId(courseLike)==null?false:courseMapper.likeCheckByCourseIdUserId(courseLike);
+        Boolean isLike = false;
+        if(sessionUser != null){
+            CourseLike courseLike = new CourseLike(courseId, sessionUser.getId(),false);
+            isLike = courseMapper.likeCheckByCourseIdUserId(courseLike)==null?false:courseMapper.likeCheckByCourseIdUserId(courseLike);
+        }
 
         courseDetail = new CourseDetail(course, nickname,profileImg, days,likeCnt,commentCnt,attractionCnt,plans,comments,isLike);
         return courseDetail;
