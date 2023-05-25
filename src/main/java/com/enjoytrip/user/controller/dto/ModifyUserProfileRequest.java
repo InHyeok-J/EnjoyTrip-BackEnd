@@ -14,10 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class ModifyUserProfileRequest {
 
     private String nickname;
-    private Optional<MultipartFile> image;
 
-    public ModifyUserProfileRequest(String nickname, Optional<MultipartFile> image) {
+    public ModifyUserProfileRequest(String nickname) {
         this.nickname = nickname;
-        this.image = image;
     }
 }

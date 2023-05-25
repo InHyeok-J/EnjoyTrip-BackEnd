@@ -1,57 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.enjoytrip.attraction.dao.AttractionReviewMapper">
-    <select id="getReviewsByAttractionId" resultType="com.enjoytrip.attraction.dto.AttractionReviewResDto">
-        SELECT r.user_id     AS userId,
-               u.nickname,
-               u.profile_img AS userProfileImg,
-               r.id AS 'review.id', r.title AS 'review.title', r.content AS 'review.content', r.score AS 'review.score', r.user_id AS 'review.userId', r.attraction_id AS 'review.attractionId', r.created_at AS 'review.createdAt'
-        FROM attraction_review r
-                 INNER JOIN user u ON r.user_id = u.id
-        WHERE r.attraction_id = #{attractionId}
-        ORDER BY r.created_at DESC;
+  <select id="getReviewsByAttractionId"
+    resultType="com.enjoytrip.attraction.dto.AttractionReviewResDto">
+    SELECT r.user_id     AS userId,
+           u.nickname,
+           u.profile_img AS userProfileImg,
+           r.id AS 'review.id', r.title AS 'review.title', r.content AS 'review.content', r.score AS 'review.score', r.user_id AS 'review.userId', r.attraction_id AS 'review.attractionId', r.created_at AS 'review.createdAt', r.image_url AS 'review.imageUrl'
+    FROM attraction_review r
+           INNER JOIN user u ON r.user_id = u.id
+    WHERE r.attraction_id = #{attractionId}
+    ORDER BY r.created_at DESC;
+  </select>
 
-    </select>
+  <select id="getEvaluation" resultType="com.enjoytrip.attraction.dto.AttractionReviewScoreDto">
+    SELECT COUNT(*)   AS reviewsCount,
+           AVG(score) AS score
+    FROM attraction_review
+    WHERE attraction_id = #{attractionId}
+  </select>
 
-    <select id="getEvaluation" resultType="com.enjoytrip.attraction.dto.AttractionReviewScoreDto">
-        SELECT
-            COUNT(*) AS reviewsCount,
-            AVG(score) AS score
-        FROM
-            attraction_review
-        WHERE attraction_id = #{attractionId}
-    </select>
+  <select id="getReviewsByUserId">
+    select id, title, content, score, user_id userId, attraction_id attractionId
+    from attraction_review
+    where user_id = #{userId}
+  </select>
 
-    <select id="getReviewsByUserId">
-        select id, title, content, score, user_id userId, attraction_id attractionId
-        from attraction_review where user_id=#{userId}
-    </select>
+  <select id="getOneReview" resultType="com.enjoytrip.attraction.entity.AttractionReview">
+    select id, title, content, score, user_id userId, attraction_id attractionId
+    from attraction_review
+    where id = #{reviewId}
+  </select>
 
-    <select id="getOneReview" resultType="com.enjoytrip.attraction.entity.AttractionReview">
-        select id, title, content, score, user_id userId, attraction_id attractionId
-        from attraction_review where id=#{reviewId}
-    </select>
+  <select id="getReviewsByUserIdForMyPage" parameterType="Long"
+    resultType="com.enjoytrip.attraction.dto.AttractionReviewMypageDto">
+    select at.attraction_name, ar.title, ar.content, ar.created_at, ar.attraction_id
+    from attraction_review ar
+           join attraction at
+    on ar.attraction_id = at.id
+    where user_id = #{userId};
+  </select>
 
-    <select id="getReviewsByUserIdForMyPage" parameterType="Long" resultType="com.enjoytrip.attraction.dto.AttractionReviewMypageDto">
-        select at.attraction_name, ar.title, ar.content, ar.created_at, ar.attraction_id
-        from attraction_review ar join attraction at
-        on ar.attraction_id = at.id
-        where user_id = #{userId};
-    </select>
+  <insert id="writeReview" parameterType="com.enjoytrip.attraction.entity.AttractionReview"
+    useGeneratedKeys="true" keyProperty="id">
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+      SELECT LAST_INSERT_ID() AS id
+    </selectKey>
+    insert into attraction_review(title, content, score, user_id, attraction_id,
+    created_at,image_url)
+    values (#{title},#{content},#{score},#{userId},#{attractionId}, CURRENT_TIMESTAMP, #{imageUrl})
+  </insert>
 
-    <insert id="writeReview" parameterType="com.enjoytrip.attraction.dto.AttractionReviewCreateDto"
-            useGeneratedKeys="true" keyProperty="id">
-        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
-            SELECT LAST_INSERT_ID() AS id
-        </selectKey>
-        insert into attraction_review(title, content, score, user_id, attraction_id, created_at)
-        values (#{title},#{content},#{score},#{userId},#{attractionId}, CURRENT_TIMESTAMP)
-    </insert>
-
-    <delete id="deleteReview">
-        delete from attraction_review where id = #{id}
-    </delete>
+  <delete id="deleteReview">
+    delete
+    from attraction_review
+    where id = #{id}
+  </delete>
 </mapper>

@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,9 +44,10 @@ public class UserController {
     }
 
     @PatchMapping("/user")
-    public ResponseEntity<?> modefiyProfile(@ModelAttribute ModifyUserProfileRequest request,
+    public ResponseEntity<?> modefiyProfile(@ModelAttribute ModifyUserProfileRequest request ,@RequestParam(value = "image", required = false)
+        MultipartFile image,
         @AuthenticationPrincipal SessionUser sessionUser) {
-        User user = userService.modifyProfile(request, sessionUser.getId());
+        User user = userService.modifyProfile(request, image, sessionUser.getId());
         return JsonResponse.okWithData(HttpStatus.OK, "수정 성공", UserResponse.from(user));
     }
 

@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -66,10 +67,10 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User modifyProfile(ModifyUserProfileRequest requestDto, Long userId) {
+    public User modifyProfile(ModifyUserProfileRequest requestDto, MultipartFile file,  Long userId) {
         User user = userMapper.selectById(userId);
-        if (requestDto.getImage().isPresent()) {
-            String url = s3Uploader.uploadFile(requestDto.getImage().get());
+        if (file!= null) {
+            String url = s3Uploader.uploadFile(file);
             user.setProfileImg(url);
         }
         user.setNickname(requestDto.getNickname());

@@ -7,6 +7,7 @@ import com.enjoytrip.attraction.dto.AttractionReviewScoreDto;
 import com.enjoytrip.attraction.entity.AttractionReview;
 
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface AttractionReviewService {
     List<AttractionReviewResDto> getReviewsByAttractionId(String attractionId);
@@ -14,7 +15,7 @@ public interface AttractionReviewService {
     AttractionReview getOneReview(String reviewId);
     AttractionReviewScoreDto getEvaluation(String attractionId);
 
-    Long writeReview(AttractionReview review);
+    Long writeReview(AttractionReviewCreateDto reviewCreateDto, MultipartFile file, Long userId);
 
     int deleteReview(String id);
     List<AttractionReviewMypageDto> getReviewsByUserIdForMyPage(Long userId);

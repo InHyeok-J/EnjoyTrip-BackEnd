@@ -1,28 +1,31 @@
 package com.enjoytrip.attraction.dto;
 
 import com.enjoytrip.attraction.entity.AttractionReview;
+import java.util.Optional;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 public class AttractionReviewCreateDto {
-    private Long id;
-    @NotBlank
     private String title;
-    @NotBlank
     private String content;
-    @NotNull
     private Integer score;
-    @NotNull
     private Long attractionId;
+
+    public AttractionReviewCreateDto(String title, String content, Integer score,
+        Long attractionId) {
+        this.title = title;
+        this.content = content;
+        this.score = score;
+        this.attractionId = attractionId;
+    }
+
     public AttractionReview toEntity(Long userId) {
         return AttractionReview.builder()
                 .title(title)

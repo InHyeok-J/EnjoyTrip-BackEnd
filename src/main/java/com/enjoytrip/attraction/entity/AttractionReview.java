@@ -20,5 +20,6 @@ public class AttractionReview {
     private Long userId;
     private Long attractionId;
     private Date createdAt;
+    private String imageUrl;
 
 }
