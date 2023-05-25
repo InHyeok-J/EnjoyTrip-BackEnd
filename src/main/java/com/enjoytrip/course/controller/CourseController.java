@@ -80,8 +80,8 @@ public class CourseController {
     }
 
     @PatchMapping("/like")
-    public ResponseEntity<?> likeChange(@RequestBody CourseLike courseLike,
-        @AuthenticationPrincipal SessionUser sessionUser) {
+    public ResponseEntity<?> likeChange(@RequestBody CourseLike courseLike, @AuthenticationPrincipal SessionUser sessionUser){
+        if (sessionUser == null) return JsonResponse.fail("로그인 필요", HttpStatus.FORBIDDEN.value());
         courseLike.setUserId(sessionUser.getId());
         boolean isLike = courseService.likeChange(courseLike);
         return JsonResponse.okWithData(HttpStatus.OK, "Like Change 성공", isLike);
