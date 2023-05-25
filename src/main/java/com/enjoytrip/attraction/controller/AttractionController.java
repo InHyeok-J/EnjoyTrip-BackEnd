@@ -31,13 +31,20 @@ public class AttractionController {
     @GetMapping("")
     public ResponseEntity<?> search(AttractionSearchOptionsDto options) {
         List<AttractionListResDto> list = service.search(options);
-        System.out.println(list);
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 검색 성공!", list);
     }
     @GetMapping("/hot")
     public ResponseEntity<?> getHotAttraction() {
         AttractionListResDto dto = service.getHotAttraction();
         return JsonResponse.okWithData(HttpStatus.OK, "attraction hot 조회 성공!", dto);
+    }
+
+    @GetMapping("/recommend")
+    public ResponseEntity<?> getRecommendedAttraction(@AuthenticationPrincipal SessionUser sessionUser) {
+        if (sessionUser == null)
+            return JsonResponse.fail("로그인 안 되어 있음", HttpStatus.BAD_REQUEST.value());
+        List<AttractionListResDto> attraction = service.getRecommend(sessionUser.getId());
+        return JsonResponse.okWithData(HttpStatus.OK, "attraction recommend 조회 성공!", attraction);
     }
 
     @GetMapping("/sidos/{sidoCode}")

@@ -18,4 +18,8 @@ public interface AttractionMapper {
     List<AttractionGugunDto> getGugun(String sidoCode);
 
     AttractionListResDto getHotAttraction();
+
+    List<AttractionListResDto> getRecommend(Long userId);
+
+    int setFavorite(Long userId);
 }
