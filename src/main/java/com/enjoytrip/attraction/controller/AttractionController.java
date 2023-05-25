@@ -34,6 +34,11 @@ public class AttractionController {
         System.out.println(list);
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 검색 성공!", list);
     }
+    @GetMapping("/hot")
+    public ResponseEntity<?> getHotAttraction() {
+        AttractionListResDto dto = service.getHotAttraction();
+        return JsonResponse.okWithData(HttpStatus.OK, "attraction hot 조회 성공!", dto);
+    }
 
     @GetMapping("/sidos/{sidoCode}")
     public ResponseEntity<?> getGugun(@PathVariable String sidoCode) {

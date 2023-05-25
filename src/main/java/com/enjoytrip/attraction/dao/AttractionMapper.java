@@ -16,4 +16,6 @@ public interface AttractionMapper {
     AttractionDetailResDto getDetail(String attractionId);
 
     List<AttractionGugunDto> getGugun(String sidoCode);
+
+    AttractionListResDto getHotAttraction();
 }

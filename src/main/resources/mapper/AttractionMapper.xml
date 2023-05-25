@@ -4,6 +4,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.enjoytrip.attraction.dao.AttractionMapper">
+    <select id="getHotAttraction" resultType="com.enjoytrip.attraction.dto.AttractionListResDto">
+        SELECT a.id,
+               a.category,
+               a.category_mean             AS categoryMean,
+               a.attraction_name           AS attractionName,
+               a.address,
+               a.attraction_image_url      AS attractionImageUrl,
+               a.sido_code                 AS sidoCode,
+               a.gugun_code                AS gugunCode,
+               COALESCE(x.reviewsCount, 0) AS reviewsCount,
+               COALESCE(x.score, 0)        AS score
+        FROM attraction a
+                 LEFT OUTER JOIN (SELECT attraction_id,
+                                         COUNT(*)   AS reviewsCount,
+                                         AVG(score) AS score
+                                  FROM attraction_review
+                                  GROUP BY attraction_id) x ON a.id = x.attraction_id
+        ORDER BY x.score DESC
+            LIMIT 1
+
+    </select>
 
     <select id="search" parameterType="com.enjoytrip.attraction.dto.AttractionSearchOptionsDto"
             resultType="com.enjoytrip.attraction.dto.AttractionListResDto">
