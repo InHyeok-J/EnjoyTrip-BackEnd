@@ -20,30 +20,32 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
 
     private final CourseMapper courseMapper;
     private final UserMapper userMapper;
+
     @Override
     public List<CourseList> SelectAll() {
         List<CourseList> list = new ArrayList<>();
         List<Course> courseList = courseMapper.SelectAll();
 
-        for (Course course: courseList) {
+        for (Course course : courseList) {
             User user = userMapper.selectNicknameProfileByUserId(course.getUserId());
             String nickname = user.getNickname();
             StringBuilder courseExample = new StringBuilder();
             List<CourseAttraction> courseAttraction = courseMapper.GetCourseExample(course.getId());
 
-            int attractionsSize = courseAttraction.size()>=4?4:courseAttraction.size();
+            int attractionsSize = courseAttraction.size() >= 4 ? 4 : courseAttraction.size();
             for (int i = 0; i < attractionsSize; i++) {
-                courseExample.append(courseAttraction.get(i).getAttractionName()+", ");
+                courseExample.append(courseAttraction.get(i).getAttractionName() + ", ");
             }
 
             int likeCnt = courseMapper.likeCnt(course.getId());
             int commentCnt = courseMapper.commentCnt(course.getId());
 //            courseExample.replace(courseExample.length()-2,courseExample.length(),"");
-            list.add(new CourseList(course,nickname,courseExample.toString(),likeCnt,commentCnt));
+            list.add(
+                new CourseList(course, nickname, courseExample.toString(), likeCnt, commentCnt));
         }
         return list;
     }
@@ -53,21 +55,22 @@ public class CourseServiceImpl implements CourseService{
         List<CourseList> list = new ArrayList<>();
         List<Course> courseList = courseMapper.coursesByLike(userId);
 
-        for (Course course: courseList) {
+        for (Course course : courseList) {
             User user = userMapper.selectNicknameProfileByUserId(course.getUserId());
             String nickname = user.getNickname();
             StringBuilder courseExample = new StringBuilder();
             List<CourseAttraction> courseAttraction = courseMapper.GetCourseExample(course.getId());
 
-            int attractionsSize = courseAttraction.size()>=4?4:courseAttraction.size();
+            int attractionsSize = courseAttraction.size() >= 4 ? 4 : courseAttraction.size();
             for (int i = 0; i < attractionsSize; i++) {
-                courseExample.append(courseAttraction.get(i).getAttractionName()+", ");
+                courseExample.append(courseAttraction.get(i).getAttractionName() + ", ");
             }
 
             int likeCnt = courseMapper.likeCnt(course.getId());
             int commentCnt = courseMapper.commentCnt(course.getId());
-            courseExample.replace(courseExample.length()-3,courseExample.length(),"");
-            list.add(new CourseList(course,nickname,courseExample.toString(),likeCnt,commentCnt));
+            courseExample.replace(courseExample.length() - 3, courseExample.length(), "");
+            list.add(
+                new CourseList(course, nickname, courseExample.toString(), likeCnt, commentCnt));
         }
         return list;
     }
@@ -82,13 +85,13 @@ public class CourseServiceImpl implements CourseService{
         int likeCnt = courseMapper.likeCnt(course.getId());
         int commentCnt = courseMapper.commentCnt(course.getId());
         String days = "";
-        if(course.getSchedule() == 1){
+        if (course.getSchedule() == 1) {
             days = "당일치기";
-        }else if(course.getSchedule() == 2){
+        } else if (course.getSchedule() == 2) {
             days = "1박 2일";
-        }else if(course.getSchedule() == 3){
+        } else if (course.getSchedule() == 3) {
             days = "2박 3일";
-        }else if(course.getSchedule() == 4){
+        } else if (course.getSchedule() == 4) {
             days = "3박 4일";
         }
 
@@ -97,27 +100,30 @@ public class CourseServiceImpl implements CourseService{
             plans.add(new ArrayList<>());
         }
 
-        List<CourseAttraction> courseAttractions = courseMapper.AttractionByCourseId(course.getId());
+        List<CourseAttraction> courseAttractions = courseMapper.AttractionByCourseId(
+            course.getId());
         int attractionCnt = 0;
-        for (CourseAttraction courseAttraction: courseAttractions) {
-            plans.get(courseAttraction.getDay() -1).add(courseAttraction);
+        for (CourseAttraction courseAttraction : courseAttractions) {
+            plans.get(courseAttraction.getDay() - 1).add(courseAttraction);
             attractionCnt++;
         }
 
         List<CourseComment> comment = courseMapper.commentsByCourseId(course.getId());
         List<CourseComments> comments = new ArrayList<>();
-        for (CourseComment cc: comment) {
+        for (CourseComment cc : comment) {
             User u = userMapper.selectNicknameProfileByUserId(cc.getUserId());
-            comments.add(new CourseComments(cc, u.getNickname(),u.getProfileImg()));
+            comments.add(new CourseComments(cc, u.getNickname(), u.getProfileImg()));
         }
 
         Boolean isLike = false;
-        if(sessionUser != null){
-            CourseLike courseLike = new CourseLike(courseId, sessionUser.getId(),false);
-            isLike = courseMapper.likeCheckByCourseIdUserId(courseLike)==null?false:courseMapper.likeCheckByCourseIdUserId(courseLike);
+        if (sessionUser != null) {
+            CourseLike courseLike = new CourseLike(courseId, sessionUser.getId(), false);
+            isLike = courseMapper.likeCheckByCourseIdUserId(courseLike) == null ? false
+                : courseMapper.likeCheckByCourseIdUserId(courseLike);
         }
 
-        courseDetail = new CourseDetail(course, nickname,profileImg, days,likeCnt,commentCnt,attractionCnt,plans,comments,isLike);
+        courseDetail = new CourseDetail(course, nickname, profileImg, days, likeCnt, commentCnt,
+            attractionCnt, plans, comments, isLike);
         return courseDetail;
     }
 
@@ -132,20 +138,26 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void makeCourse(CourseMakeRequest makeRequest) {
+    public void makeCourse(CourseMakeRequest makeRequest, Long userId) {
         Course course = Course.builder()
-                .userId(makeRequest.getUserId())
-                .title(makeRequest.getTitle())
-                .isPublic(makeRequest.getIsPublic())
-                .build();
+            .userId(userId)
+            .title(makeRequest.getTitle())
+            .schedule(makeRequest.getSchedule())
+            .description(makeRequest.getDescription())
+            .isPublic(makeRequest.getIsPublic())
+            .courseImgUrl(makeRequest.getImage())
+            .build();
+
         courseMapper.makeCourse(course);
 
-        if(course.getId() != null){
+        if (course.getId() != null) {
             CourseAttraction courseAttraction = CourseAttraction.builder()
-                    .courseId(course.getId())
-                    .build();
-            for (Long attractionId : makeRequest.getAttractionIds()) {
-                courseAttraction.setAttractionId(attractionId);
+                .courseId(course.getId())
+                .build();
+            for (CourseAttractionRequest attraction : makeRequest.getAttractions()) {
+                courseAttraction.setAttractionId(attraction.getAttractionId());
+                courseAttraction.setDay(attraction.getDay());
+                courseAttraction.setDate(attraction.getDate());
                 courseMapper.insertAttraction(courseAttraction);
             }
         }
@@ -165,14 +177,15 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public CourseComments commentAdd(CourseComment courseComment) {
         courseMapper.commentAdd(courseComment);
-        if(courseComment.getId()> 0){
+        if (courseComment.getId() > 0) {
             User user = userMapper.selectNicknameProfileByUserId(courseComment.getUserId());
             String nickname = user.getNickname();
             String profileImgUrl = user.getProfileImg();
             courseComment = courseMapper.commentByCommentId(courseComment.getId());
-            CourseComments courseComments = new CourseComments(courseComment,nickname,profileImgUrl);
+            CourseComments courseComments = new CourseComments(courseComment, nickname,
+                profileImgUrl);
             return courseComments;
-        }else {
+        } else {
             return null;
         }
     }
@@ -180,11 +193,12 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public boolean likeChange(CourseLike courseLike) {
         int flag = courseMapper.likeCheckThisCourse(courseLike);
-        if(flag==0){
+        if (flag == 0) {
             courseMapper.courseLike(courseLike);
             return true;
         }
-        return courseMapper.likeChange(courseLike)==1?!courseLike.getIsLike():courseLike.getIsLike();
+        return courseMapper.likeChange(courseLike) == 1 ? !courseLike.getIsLike()
+            : courseLike.getIsLike();
     }
 
     @Override

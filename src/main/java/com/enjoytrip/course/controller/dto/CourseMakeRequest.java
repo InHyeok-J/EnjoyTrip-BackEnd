@@ -14,18 +14,11 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 public class CourseMakeRequest {
-    private Long userId;
+
     private String title;
     private Boolean isPublic;
-    private List<Long> attractionIds;
-
-    /*
-    * {
-    * title : "코스1",
-    * isPublic : "true",
-    * attractionIds:[{
-    * atractionId : 125266
-    * }]
-    * }
-    * */
+    private int schedule;
+    private String description;
+    private String image;
+    private List<CourseAttractionRequest> attractions;
 }
