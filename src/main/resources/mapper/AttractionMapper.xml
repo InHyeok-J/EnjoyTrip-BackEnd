@@ -6,27 +6,20 @@
 <mapper namespace="com.enjoytrip.attraction.dao.AttractionMapper">
     <update id="setFavorite" >
         UPDATE user
-        SET favorite = (
+            JOIN (
             SELECT a.category
             FROM attraction a
-            WHERE a.id IN (
-                SELECT attraction_id
-                FROM attraction_review
-                WHERE user_id = #{userId}
-                GROUP BY attraction_id
-                HAVING AVG(score) = (
-                    SELECT MAX(avg_score)
-                    FROM (
-                             SELECT AVG(score) AS avg_score
-                             FROM attraction_review
-                             WHERE user_id = #{userId}
-                             GROUP BY attraction_id
-                         ) AS subquery
-                )
-            )
-        )
-        WHERE id = #{userId};
-
+            JOIN (
+            SELECT attraction_id, AVG(score) AS avg_score
+            FROM attraction_review
+            WHERE user_id = #{userId}
+            GROUP BY attraction_id
+            ORDER BY avg_score DESC
+            LIMIT 1
+            ) AS subquery ON a.id = subquery.attraction_id
+            ) AS category_result ON 1 = 1
+            SET user.favorite = category_result.category
+        WHERE user.id = #{userId};
     </update>
     <select id="getRecommend" resultType="com.enjoytrip.attraction.dto.AttractionListResDto">
         SELECT a.*,
