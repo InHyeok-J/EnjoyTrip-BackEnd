@@ -17,11 +17,13 @@
     select *
     from user
   </select>
+
   <select id="selectNicknameProfileByUserId" parameterType="Long" resultType="com.enjoytrip.user.entity.User">
     select nickname, profile_img
     from user
     where id = #{id}
   </select>
+
   <select id="selectByEmail" resultType="com.enjoytrip.user.entity.User" parameterType="string">
     select id,
            email,

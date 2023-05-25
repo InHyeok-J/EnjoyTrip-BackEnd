@@ -14,6 +14,7 @@ import java.util.List;
 
 public interface CourseService {
     List<CourseList> SelectAll();
+    List<CourseList> coursesByLike(Long userId);
     CourseDetail SelectOneByCourseId(Long courseId, SessionUser sessionUser);
     List<Course> CourseByUserId(Long userId);
     List<CourseAttraction> AttractionByCourseId(Long courseId);
@@ -22,4 +23,5 @@ public interface CourseService {
     void courseLike(CourseLike like);
     CourseComments commentAdd(CourseComment courseComment);
     boolean likeChange(CourseLike courseLike);
+    List<CourseComment> commentByUserId(Long userId);
 }

@@ -35,6 +35,13 @@
         from attraction_review where id=#{reviewId}
     </select>
 
+    <select id="getReviewsByUserIdForMyPage" parameterType="Long" resultType="com.enjoytrip.attraction.dto.AttractionReviewMypageDto">
+        select at.attraction_name, ar.title, ar.content, ar.created_at, ar.attraction_id
+        from attraction_review ar join attraction at
+        on ar.attraction_id = at.id
+        where user_id = #{userId};
+    </select>
+
     <insert id="writeReview" parameterType="com.enjoytrip.attraction.dto.AttractionReviewCreateDto"
             useGeneratedKeys="true" keyProperty="id">
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
