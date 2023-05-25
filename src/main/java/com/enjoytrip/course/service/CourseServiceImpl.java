@@ -42,7 +42,7 @@ public class CourseServiceImpl implements CourseService{
 
             int likeCnt = courseMapper.likeCnt(course.getId());
             int commentCnt = courseMapper.commentCnt(course.getId());
-            courseExample.replace(courseExample.length()-3,courseExample.length(),"");
+//            courseExample.replace(courseExample.length()-2,courseExample.length(),"");
             list.add(new CourseList(course,nickname,courseExample.toString(),likeCnt,commentCnt));
         }
         return list;
@@ -112,7 +112,7 @@ public class CourseServiceImpl implements CourseService{
         }
 
         CourseLike courseLike = new CourseLike(courseId, sessionUser.getId(),false);
-        Boolean isLike = courseMapper.likeCheckByCourseIdUserId(courseLike);
+        Boolean isLike = courseMapper.likeCheckByCourseIdUserId(courseLike)==null?false:courseMapper.likeCheckByCourseIdUserId(courseLike);
 
         courseDetail = new CourseDetail(course, nickname,profileImg, days,likeCnt,commentCnt,attractionCnt,plans,comments,isLike);
         return courseDetail;
@@ -176,6 +176,11 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public boolean likeChange(CourseLike courseLike) {
+        int flag = courseMapper.likeCheckThisCourse(courseLike);
+        if(flag==0){
+            courseMapper.courseLike(courseLike);
+            return true;
+        }
         return courseMapper.likeChange(courseLike)==1?!courseLike.getIsLike():courseLike.getIsLike();
     }
 

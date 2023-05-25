@@ -12,10 +12,10 @@
     <select id="coursesByLike" parameterType="Long" resultType="com.enjoytrip.course.entity.Course">
         select *
         from course
-        where id = (select  c.id
+        where id in (select  c.id
                     from course c join course_like cl
                     on c.id = cl.course_id
-                    where cl.user_id = #{id});
+                    where cl.user_id = #{id} and cl.is_like=1);
     </select>
 
     <select id="SelectOneByCourseId" parameterType="Long" resultType="com.enjoytrip.course.entity.Course">
@@ -42,6 +42,11 @@
     <select id="likeCnt" parameterType="long" resultType="int">
         select count(*)
         from course_like where course_id = #{courseId} and is_like = 1
+    </select>
+
+    <select id="likeCheckThisCourse" parameterType="com.enjoytrip.course.entity.CourseLike" resultType="int">
+        select count(*)
+        from course_like where course_id = #{courseId} and user_id=#{userId}
     </select>
 
     <select id="commentCnt" parameterType="long" resultType="int">
@@ -78,7 +83,7 @@
     </insert>
 
     <insert id="courseLike" parameterType="com.enjoytrip.course.entity.CourseLike" >
-        insert into course_like(course_id, user_id) values(#{courseId}, #{userId})
+        insert into course_like values(null,#{courseId}, #{userId},true)
     </insert>
 
     <insert id="commentAdd" parameterType="com.enjoytrip.course.entity.CourseComment" useGeneratedKeys="true" keyProperty="id">

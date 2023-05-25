@@ -34,6 +34,7 @@ public class CourseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> selectOne(@PathVariable Long id, @AuthenticationPrincipal SessionUser sessionUser){
+        System.out.println(id+" "+sessionUser.getId());
         CourseDetail courseDetail = courseService.SelectOneByCourseId(id, sessionUser);
         return JsonResponse.okWithData(HttpStatus.OK, "Course Detail 검색 성공", courseDetail);
     }
