@@ -6,6 +6,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class AttractionListResDto {
     private Long id;
     private int category;
@@ -15,4 +16,6 @@ public class AttractionListResDto {
     private String attractionImageUrl;
     private int reviewsCount;
     private double score;
+    private int sidoCode;
+    private int gugunCode;
 }

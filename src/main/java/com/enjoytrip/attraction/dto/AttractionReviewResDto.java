@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttractionReviewResDto {
+    private Long id;
     private String userId;
     private String nickname;
     private String userProfileImg;

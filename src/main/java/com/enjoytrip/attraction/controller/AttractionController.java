@@ -31,6 +31,7 @@ public class AttractionController {
     @GetMapping("")
     public ResponseEntity<?> search(AttractionSearchOptionsDto options) {
         List<AttractionListResDto> list = service.search(options);
+        System.out.println(list);
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 검색 성공!", list);
     }
 

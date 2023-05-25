@@ -5,12 +5,15 @@
 
 <mapper namespace="com.enjoytrip.attraction.dao.AttractionReviewMapper">
     <select id="getReviewsByAttractionId" resultType="com.enjoytrip.attraction.dto.AttractionReviewResDto">
-        SELECT r.user_id AS userId, u.nickname, u.profile_img AS userProfileImg,
-               r.id AS 'review.id', r.title AS 'review.title', r.content AS 'review.content',
-                r.score AS 'review.score', r.user_id AS 'review.userId', r.attraction_id AS 'review.attractionId', r.created_at AS 'review.createdAt'
+        SELECT r.user_id     AS userId,
+               u.nickname,
+               u.profile_img AS userProfileImg,
+               r.id AS 'review.id', r.title AS 'review.title', r.content AS 'review.content', r.score AS 'review.score', r.user_id AS 'review.userId', r.attraction_id AS 'review.attractionId', r.created_at AS 'review.createdAt'
         FROM attraction_review r
                  INNER JOIN user u ON r.user_id = u.id
         WHERE r.attraction_id = #{attractionId}
+        ORDER BY r.created_at DESC;
+
     </select>
 
     <select id="getEvaluation" resultType="com.enjoytrip.attraction.dto.AttractionReviewScoreDto">

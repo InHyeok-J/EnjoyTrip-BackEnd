@@ -15,6 +15,8 @@
         a.attraction_name AS attractionName,
         a.address,
         a.attraction_image_url AS attractionImageUrl,
+        a.sido_code AS sidoCode,
+        a.gugun_code AS gugunCode,
         COALESCE(x.reviewsCount, 0) AS reviewsCount,
         COALESCE(x.score, 0) AS score
         FROM
