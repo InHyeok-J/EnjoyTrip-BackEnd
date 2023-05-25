@@ -32,6 +32,7 @@ mybatis:
 oauth:
   kakao:
     client_key: ${KAKAO_CLIENT_KEY}
+#    redirect: 'https://web-tripfy-frontend-f69b2mlhc41lrz.sel4.cloudtype.app/oauth/kakao/callback'
     redirect: 'http://localhost:3000/oauth/kakao/callback'
     admin_key: ${KAKAO_ADMIN_KEY}
 

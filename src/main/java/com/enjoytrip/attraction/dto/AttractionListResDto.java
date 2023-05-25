@@ -9,6 +9,7 @@ import lombok.*;
 public class AttractionListResDto {
     private Long id;
     private int category;
+    private String categoryMean;
     private String attractionName;
     private String address;
     private String attractionImageUrl;

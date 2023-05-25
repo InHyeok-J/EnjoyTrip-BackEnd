@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins("http://localhost:3000")
+            .allowedOrigins("http://localhost:3000", "https://web-tripfy-frontend-f69b2mlhc41lrz.sel4.cloudtype.app")
             .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH")
             .allowCredentials(true);
     }

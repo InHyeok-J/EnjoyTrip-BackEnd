@@ -2,6 +2,7 @@ package com.enjoytrip.attraction.service;
 
 import com.enjoytrip.attraction.dao.AttractionMapper;
 import com.enjoytrip.attraction.dto.AttractionDetailResDto;
+import com.enjoytrip.attraction.dto.AttractionGugunDto;
 import com.enjoytrip.attraction.dto.AttractionListResDto;
 import com.enjoytrip.attraction.dto.AttractionSearchOptionsDto;
 import com.enjoytrip.attraction.entity.Attraction;
@@ -22,5 +23,10 @@ public class AttractionServiceImpl implements AttractionService {
     @Override
     public AttractionDetailResDto getDetail(String attractionId) {
         return dao.getDetail(attractionId);
+    }
+
+    @Override
+    public List<AttractionGugunDto> getGugun(String sidoCode) {
+        return dao.getGugun(sidoCode);
     }
 }

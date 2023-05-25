@@ -34,6 +34,12 @@ public class AttractionController {
         return JsonResponse.okWithData(HttpStatus.OK, "attraction 검색 성공!", list);
     }
 
+    @GetMapping("/sidos/{sidoCode}")
+    public ResponseEntity<?> getGugun(@PathVariable String sidoCode) {
+        List<AttractionGugunDto> list = service.getGugun(sidoCode);
+        return JsonResponse.okWithData(HttpStatus.OK, "attraction 구군 성공!", list);
+    }
+
     @GetMapping("/{attractionId}")
     public ResponseEntity<?> getDetail(
             @NotBlank(message = "attractionId는 필수입니다.")
