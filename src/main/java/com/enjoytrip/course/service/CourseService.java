@@ -22,4 +22,5 @@ public interface CourseService {
     void courseLike(CourseLike like);
     CourseComments commentAdd(CourseComment courseComment);
     boolean likeChange(CourseLike courseLike);
+    List<CourseComment> commentByUserId(Long userId);
 }

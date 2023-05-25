@@ -54,6 +54,11 @@
         from course_comment where id = #{id} order by id desc
     </select>
 
+    <select id="commentByUserId" parameterType="Long" resultType="com.enjoytrip.course.entity.CourseComment">
+        select *
+        from course_comment where user_id = #{userId} order by id desc
+    </select>
+
     <insert id="makeCourse" parameterType="com.enjoytrip.course.entity.Course" useGeneratedKeys="true" keyProperty="id">
         insert into course values(null, #{userId}, #{title}, #{isPublic}, now(), now())
     </insert>

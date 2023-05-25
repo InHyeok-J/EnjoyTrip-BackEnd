@@ -57,7 +57,7 @@ public class CourseController {
     @GetMapping("/attractions")
     public ResponseEntity<?> attractionByCourseId(Long courseId){
         List<CourseAttraction> list =courseService.AttractionByCourseId(courseId);
-        return JsonResponse.okWithData(HttpStatus.OK, "내 코스 상세보기 검색 성공", list);
+        return JsonResponse.okWithData(HttpStatus.OK, "코스 별 상세보기 검색 성공", list);
     }
 
     @PatchMapping("/public")
@@ -87,5 +87,10 @@ public class CourseController {
             return JsonResponse.fail("값을 확인해주세요",400);
         }
         return JsonResponse.okWithData(HttpStatus.OK, "Comment add 성공", courseComments);
+    }
+    @GetMapping("/comment")
+    public ResponseEntity<?> commentByUserId(@AuthenticationPrincipal SessionUser sessionUser){
+        List<CourseComment> list = courseService.commentByUserId(sessionUser.getId());
+        return JsonResponse.okWithData(HttpStatus.OK, "코스 별 상세보기 검색 성공", list);
     }
 }

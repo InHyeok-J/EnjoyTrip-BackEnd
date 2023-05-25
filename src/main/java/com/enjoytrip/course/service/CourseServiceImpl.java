@@ -1,5 +1,7 @@
 package com.enjoytrip.course.service;
 
+import com.enjoytrip.attraction.dao.AttractionReviewMapper;
+import com.enjoytrip.attraction.entity.AttractionReview;
 import com.enjoytrip.course.controller.dto.*;
 import com.enjoytrip.course.dao.CourseMapper;
 import com.enjoytrip.course.entity.Course;
@@ -22,7 +24,6 @@ public class CourseServiceImpl implements CourseService{
 
     private final CourseMapper courseMapper;
     private final UserMapper userMapper;
-
     @Override
     public List<CourseList> SelectAll() {
         List<CourseList> list = new ArrayList<>();
@@ -152,5 +153,10 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public boolean likeChange(CourseLike courseLike) {
         return courseMapper.likeChange(courseLike)==1?!courseLike.getIsLike():courseLike.getIsLike();
+    }
+
+    @Override
+    public List<CourseComment> commentByUserId(Long userId) {
+        return courseMapper.commentByUserId(userId);
     }
 }

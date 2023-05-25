@@ -25,5 +25,7 @@ public interface CourseMapper {
     List<CourseComment> commentsByCourseId(Long courseId);
     boolean likeCheckByCourseIdUserId(CourseLike courseLike);
     int likeChange(CourseLike courseLike);
-    CourseComment commentByCommentId(Long id);
+    CourseComment commentByCommentId(Long commentId);
+
+    List<CourseComment> commentByUserId(Long userId);
 }
