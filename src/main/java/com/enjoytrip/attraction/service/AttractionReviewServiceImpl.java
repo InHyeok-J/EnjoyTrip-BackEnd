@@ -2,6 +2,7 @@ package com.enjoytrip.attraction.service;
 
 import com.enjoytrip.attraction.dao.AttractionReviewMapper;
 import com.enjoytrip.attraction.dto.AttractionReviewCreateDto;
+import com.enjoytrip.attraction.dto.AttractionReviewMypageDto;
 import com.enjoytrip.attraction.dto.AttractionReviewResDto;
 import com.enjoytrip.attraction.dto.AttractionReviewScoreDto;
 import com.enjoytrip.attraction.entity.AttractionReview;
@@ -43,5 +44,10 @@ public class AttractionReviewServiceImpl implements AttractionReviewService {
     @Override
     public int deleteReview(String id) {
         return dao.deleteReview(id);
+    }
+
+    @Override
+    public List<AttractionReviewMypageDto> getReviewsByUserIdForMyPage(Long userId) {
+        return dao.getReviewsByUserIdForMyPage(userId);
     }
 }

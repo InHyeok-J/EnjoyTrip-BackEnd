@@ -1,6 +1,7 @@
 package com.enjoytrip.attraction.service;
 
 import com.enjoytrip.attraction.dto.AttractionReviewCreateDto;
+import com.enjoytrip.attraction.dto.AttractionReviewMypageDto;
 import com.enjoytrip.attraction.dto.AttractionReviewResDto;
 import com.enjoytrip.attraction.dto.AttractionReviewScoreDto;
 import com.enjoytrip.attraction.entity.AttractionReview;
@@ -16,4 +17,5 @@ public interface AttractionReviewService {
     Long writeReview(AttractionReview review);
 
     int deleteReview(String id);
+    List<AttractionReviewMypageDto> getReviewsByUserIdForMyPage(Long userId);
 }

@@ -11,6 +11,7 @@ import java.util.List;
 @Mapper
 public interface CourseMapper {
     List<Course> SelectAll();
+    List<Course> coursesByLike(Long userId);
     Course SelectOneByCourseId(Long courseId);
     List<Course> CourseByUserId(Long userId);
     List<CourseAttraction> AttractionByCourseId(Long courseId);
@@ -23,7 +24,9 @@ public interface CourseMapper {
     void courseLike(CourseLike like);
     void commentAdd(CourseComment courseComment);
     List<CourseComment> commentsByCourseId(Long courseId);
-    boolean likeCheckByCourseIdUserId(CourseLike courseLike);
-    int likeChange(CourseLike courseLike);
-    CourseComment commentByCommentId(Long id);
+    Boolean likeCheckByCourseIdUserId(CourseLike courseLike);
+    Integer likeChange(CourseLike courseLike);
+    CourseComment commentByCommentId(Long commentId);
+    List<CourseComment> commentByUserId(Long userId);
+    int likeCheckThisCourse(CourseLike courseLike);
 }

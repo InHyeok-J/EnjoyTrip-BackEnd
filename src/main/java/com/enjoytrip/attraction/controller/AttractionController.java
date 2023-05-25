@@ -112,4 +112,10 @@ public class AttractionController {
         }
         return JsonResponse.fail("fail", HttpStatus.NOT_FOUND.value());
     }
+
+    @GetMapping("/reviews")
+    public ResponseEntity<?> getReviewsByUserId(@AuthenticationPrincipal SessionUser sessionUser){
+        List<AttractionReviewMypageDto> list = reviewService.getReviewsByUserIdForMyPage(sessionUser.getId());
+        return JsonResponse.okWithData(HttpStatus.OK, "유저 아이디로 마이패이지에 넣을 리뷰 검색 성공", list);
+    }
 }

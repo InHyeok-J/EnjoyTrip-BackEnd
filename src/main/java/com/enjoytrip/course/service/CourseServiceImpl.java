@@ -1,5 +1,7 @@
 package com.enjoytrip.course.service;
 
+import com.enjoytrip.attraction.dao.AttractionReviewMapper;
+import com.enjoytrip.attraction.entity.AttractionReview;
 import com.enjoytrip.course.controller.dto.*;
 import com.enjoytrip.course.dao.CourseMapper;
 import com.enjoytrip.course.entity.Course;
@@ -22,11 +24,34 @@ public class CourseServiceImpl implements CourseService{
 
     private final CourseMapper courseMapper;
     private final UserMapper userMapper;
-
     @Override
     public List<CourseList> SelectAll() {
         List<CourseList> list = new ArrayList<>();
         List<Course> courseList = courseMapper.SelectAll();
+
+        for (Course course: courseList) {
+            User user = userMapper.selectNicknameProfileByUserId(course.getUserId());
+            String nickname = user.getNickname();
+            StringBuilder courseExample = new StringBuilder();
+            List<CourseAttraction> courseAttraction = courseMapper.GetCourseExample(course.getId());
+
+            int attractionsSize = courseAttraction.size()>=4?4:courseAttraction.size();
+            for (int i = 0; i < attractionsSize; i++) {
+                courseExample.append(courseAttraction.get(i).getAttractionName()+", ");
+            }
+
+            int likeCnt = courseMapper.likeCnt(course.getId());
+            int commentCnt = courseMapper.commentCnt(course.getId());
+//            courseExample.replace(courseExample.length()-2,courseExample.length(),"");
+            list.add(new CourseList(course,nickname,courseExample.toString(),likeCnt,commentCnt));
+        }
+        return list;
+    }
+
+    @Override
+    public List<CourseList> coursesByLike(Long userId) {
+        List<CourseList> list = new ArrayList<>();
+        List<Course> courseList = courseMapper.coursesByLike(userId);
 
         for (Course course: courseList) {
             User user = userMapper.selectNicknameProfileByUserId(course.getUserId());
@@ -87,7 +112,7 @@ public class CourseServiceImpl implements CourseService{
         }
 
         CourseLike courseLike = new CourseLike(courseId, sessionUser.getId(),false);
-        boolean isLike = courseMapper.likeCheckByCourseIdUserId(courseLike);
+        Boolean isLike = courseMapper.likeCheckByCourseIdUserId(courseLike)==null?false:courseMapper.likeCheckByCourseIdUserId(courseLike);
 
         courseDetail = new CourseDetail(course, nickname,profileImg, days,likeCnt,commentCnt,attractionCnt,plans,comments,isLike);
         return courseDetail;
@@ -137,14 +162,11 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public CourseComments commentAdd(CourseComment courseComment) {
         courseMapper.commentAdd(courseComment);
-
         if(courseComment.getId()> 0){
             User user = userMapper.selectNicknameProfileByUserId(courseComment.getUserId());
             String nickname = user.getNickname();
             String profileImgUrl = user.getProfileImg();
             courseComment = courseMapper.commentByCommentId(courseComment.getId());
-            System.out.println(courseComment.getId());
-            System.out.println(courseMapper.commentByCommentId(17L));
             CourseComments courseComments = new CourseComments(courseComment,nickname,profileImgUrl);
             return courseComments;
         }else {
@@ -154,6 +176,16 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
     public boolean likeChange(CourseLike courseLike) {
+        int flag = courseMapper.likeCheckThisCourse(courseLike);
+        if(flag==0){
+            courseMapper.courseLike(courseLike);
+            return true;
+        }
         return courseMapper.likeChange(courseLike)==1?!courseLike.getIsLike():courseLike.getIsLike();
+    }
+
+    @Override
+    public List<CourseComment> commentByUserId(Long userId) {
+        return courseMapper.commentByUserId(userId);
     }
 }
