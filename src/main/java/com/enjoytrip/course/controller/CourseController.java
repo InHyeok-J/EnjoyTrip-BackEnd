@@ -93,4 +93,10 @@ public class CourseController {
         List<CourseComment> list = courseService.commentByUserId(sessionUser.getId());
         return JsonResponse.okWithData(HttpStatus.OK, "코스 별 상세보기 검색 성공", list);
     }
+
+    @GetMapping("/home")
+    public ResponseEntity<?> coursesByLike(@AuthenticationPrincipal SessionUser sessionUser){
+        List<CourseList> list = courseService.coursesByLike(sessionUser.getId());
+        return JsonResponse.okWithData(HttpStatus.OK, "ALL Course 검색 성공", list);
+    }
 }

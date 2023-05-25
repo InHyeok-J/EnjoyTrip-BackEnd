@@ -49,6 +49,30 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
+    public List<CourseList> coursesByLike(Long userId) {
+        List<CourseList> list = new ArrayList<>();
+        List<Course> courseList = courseMapper.coursesByLike(userId);
+
+        for (Course course: courseList) {
+            User user = userMapper.selectNicknameProfileByUserId(course.getUserId());
+            String nickname = user.getNickname();
+            StringBuilder courseExample = new StringBuilder();
+            List<CourseAttraction> courseAttraction = courseMapper.GetCourseExample(course.getId());
+
+            int attractionsSize = courseAttraction.size()>=4?4:courseAttraction.size();
+            for (int i = 0; i < attractionsSize; i++) {
+                courseExample.append(courseAttraction.get(i).getAttractionName()+", ");
+            }
+
+            int likeCnt = courseMapper.likeCnt(course.getId());
+            int commentCnt = courseMapper.commentCnt(course.getId());
+            courseExample.replace(courseExample.length()-3,courseExample.length(),"");
+            list.add(new CourseList(course,nickname,courseExample.toString(),likeCnt,commentCnt));
+        }
+        return list;
+    }
+
+    @Override
     public CourseDetail SelectOneByCourseId(Long courseId, SessionUser sessionUser) {
         CourseDetail courseDetail = null;
         Course course = courseMapper.SelectOneByCourseId(courseId);
@@ -88,7 +112,7 @@ public class CourseServiceImpl implements CourseService{
         }
 
         CourseLike courseLike = new CourseLike(courseId, sessionUser.getId(),false);
-        boolean isLike = courseMapper.likeCheckByCourseIdUserId(courseLike);
+        Boolean isLike = courseMapper.likeCheckByCourseIdUserId(courseLike);
 
         courseDetail = new CourseDetail(course, nickname,profileImg, days,likeCnt,commentCnt,attractionCnt,plans,comments,isLike);
         return courseDetail;

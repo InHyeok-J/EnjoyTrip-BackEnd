@@ -8,6 +8,16 @@
         select *
         from course
     </select>
+
+    <select id="coursesByLike" parameterType="Long" resultType="com.enjoytrip.course.entity.Course">
+        select *
+        from course
+        where id = (select  c.id
+                    from course c join course_like cl
+                    on c.id = cl.course_id
+                    where cl.user_id = #{id});
+    </select>
+
     <select id="SelectOneByCourseId" parameterType="Long" resultType="com.enjoytrip.course.entity.Course">
         select *
         from course where id = #{id}
