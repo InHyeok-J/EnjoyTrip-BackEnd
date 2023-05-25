@@ -29,4 +29,20 @@ public class AttractionServiceImpl implements AttractionService {
     public List<AttractionGugunDto> getGugun(String sidoCode) {
         return dao.getGugun(sidoCode);
     }
+
+    @Override
+    public AttractionListResDto getHotAttraction() {
+        return dao.getHotAttraction();
+    }
+
+    @Override
+    public List<AttractionListResDto> getRecommend(Long userId) {
+        this.dao.setFavorite(userId);
+        return dao.getRecommend(userId);
+    }
+
+    @Override
+    public int setFavorite(Long userId) {
+        return dao.setFavorite(userId);
+    }
 }

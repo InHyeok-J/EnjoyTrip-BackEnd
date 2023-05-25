@@ -11,4 +11,7 @@ public interface AttractionService {
     List<AttractionListResDto> search(AttractionSearchOptionsDto searchOptions);
     AttractionDetailResDto getDetail(String attractionId);
     List<AttractionGugunDto> getGugun(String sidoCode);
+    AttractionListResDto getHotAttraction();
+    List<AttractionListResDto> getRecommend(Long userId);
+    int setFavorite(Long userId);
 }
