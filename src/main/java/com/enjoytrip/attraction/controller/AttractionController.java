@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,9 +43,11 @@ public class AttractionController {
 
     @GetMapping("/recommend")
     public ResponseEntity<?> getRecommendedAttraction(@AuthenticationPrincipal SessionUser sessionUser) {
-        if (sessionUser == null)
-            return JsonResponse.fail("로그인 안 되어 있음", HttpStatus.BAD_REQUEST.value());
-        List<AttractionListResDto> attraction = service.getRecommend(sessionUser.getId());
+        List<AttractionListResDto> attraction = new ArrayList<>();
+        if (sessionUser != null) {
+            attraction = service.getRecommend(sessionUser.getId());
+        }
+
         return JsonResponse.okWithData(HttpStatus.OK, "attraction recommend 조회 성공!", attraction);
     }
 
