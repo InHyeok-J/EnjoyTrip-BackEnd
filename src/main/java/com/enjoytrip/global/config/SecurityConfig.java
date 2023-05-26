@@ -33,8 +33,8 @@ public class SecurityConfig {
             .authorizeRequests()
             .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
             .antMatchers("/user").authenticated()
-            .antMatchers("/user/signout", HttpMethod.DELETE.name()).authenticated()
-            .antMatchers("/courses", HttpMethod.POST.name()).authenticated()
+            .antMatchers(HttpMethod.DELETE,"/user/signout").authenticated()
+            .antMatchers(HttpMethod.POST,"/courses").authenticated()
             .antMatchers(HttpMethod.POST, "/attractions/*/reviews/**").authenticated()
             .anyRequest().permitAll();
         http.formLogin()
